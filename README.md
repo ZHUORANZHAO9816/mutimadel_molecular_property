@@ -1,18 +1,27 @@
-# GTpro: Graph-Text Alignment for Molecular Property Prediction
+# Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement
 
-> Author-maintained implementation and reproducibility toolkit for *Boosting
-> the performance of molecular property prediction via graph-text alignment and
-> multi-granularity representation enhancement* (Zhao et al., 2024).
+> Author-maintained implementation and reproducibility toolkit for GTpro
+> ([Zhao et al., 2024](https://doi.org/10.1016/j.jmgm.2024.108843)).
 
-GTpro is the multimodal molecular representation model proposed in the paper.
-It aligns molecular graphs and SMILES text with contrastive learning and
-cross-attention, while injecting atom-, functional-group-, and molecule-level
-supervision through APP, FPG, and GTM objectives. This repository preserves
-that paper architecture and extends the research implementation with
-installable packaging, audited data processing, resumable training, unified
-downstream evaluation, reproducible baselines, tests, and a public encoding
-API. The included empirical results use an explicitly compact 64-dimensional
-model and are not claimed to reproduce the paper-scale numbers.
+## Paper overview
+
+> “Deep learning is playing an increasingly important role in accurate
+> prediction of molecular properties.”
+
+Molecules are commonly represented as either SMILES text or molecular graphs,
+but embeddings learned from these two modalities are not naturally aligned.
+GTpro addresses this problem by applying contrastive learning to align graph
+and text representations and cross-attention to fuse them. It further enriches
+molecular representations with atom-, functional-group-, and molecule-level
+pretraining objectives. The paper reports improved downstream molecular
+property prediction with less pretraining data than the compared methods.
+
+This repository preserves the paper architecture and extends the research
+implementation with installable packaging, audited data processing, resumable
+training, unified downstream evaluation, reproducible baselines, tests, and a
+public encoding API. Results reported below from the compact 64-dimensional
+configuration are project-measured reproduction results, not the paper-scale
+numbers.
 
 ## Architecture from the paper
 
