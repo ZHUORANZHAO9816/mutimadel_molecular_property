@@ -1,9 +1,21 @@
 # Architecture and tensor flow
 
-![Original GTpro architecture diagram](assets/architecture.svg)
+![Figure 2: Overall architecture of GTpro](assets/paper_figure_2_gtpro_architecture.jpg)
 
-This diagram was created for this repository from the implemented data flow; it
-does not reproduce a copyrighted figure from the paper.
+This is Figure 2 from the GTpro paper. Panel A shows graph/SMILES encoding,
+contrastive alignment and bidirectional cross-attention; panel B expands the
+Transformer encoder; panel C shows the atom-level APP, functional-group-level
+FPG, and molecule-level GTM objectives. The figure is sourced from Zhao et al.
+(2024), DOI `10.1016/j.jmgm.2024.108843`, © 2024 Elsevier Inc., and is
+reproduced here by author request.
+
+## Implementation-oriented map
+
+![Project implementation map](assets/architecture.svg)
+
+The second diagram was created for this repository from the implemented data
+flow. It complements the paper figure with the concrete package boundaries used
+by the maintained code.
 
 ## Encoders
 

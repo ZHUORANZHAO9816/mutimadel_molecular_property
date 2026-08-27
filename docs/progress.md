@@ -3,6 +3,21 @@
 This log records engineering changes and actual verification results. Smoke
 runs are never treated as paper reproduction results.
 
+## 2026-08-27 — Paper architecture alignment
+
+- Reframed README as the author-maintained GTpro paper implementation while
+  retaining a precise distinction between the paper-scale method and the
+  compact project-measured reproduction.
+- Replaced the first-screen project sketch with the paper's high-resolution
+  Figure 2 (3060 x 2240), which shows the dual encoders, contrastive alignment,
+  cross-attention, Transformer block, and APP/FPG/GTM objectives.
+- Added the figure number, DOI, publisher copyright, author-request attribution,
+  asset provenance, and license-scope notice. The project-authored SVG remains
+  in the architecture guide as a complementary implementation map.
+- Visually inspected the downloaded publisher asset and reran the publication
+  audit. It passed with 479 candidates, 116 trace records, and all 16 README
+  local links valid.
+
 ## 2026-08-27 — Stage D2: standardized pretraining loop
 
 ### Changes

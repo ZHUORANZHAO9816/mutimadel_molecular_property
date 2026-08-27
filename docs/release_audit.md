@@ -1,7 +1,8 @@
 # Public release audit
 
-Audit date: 2026-08-27. This report covers the local publication candidates;
-the repository still has an unborn `main` branch and no published release.
+Audit date: 2026-08-27. This report covers the local publication candidates and
+the merged original repository history. No versioned GitHub Release has been
+published.
 
 ## Local candidate audit
 
@@ -15,14 +16,17 @@ directories, joblib files, and model weights are not publication candidates.
 Each copied result `metrics.json` has sibling `config.yaml` and
 `environment.json`. `scripts/summarize_results.py` replaces the machine's
 repository prefix with `${PROJECT_ROOT}` while copying these records, preserving
-traceability without publishing a workstation path. The sole README image,
-`docs/assets/architecture.svg`, is an original project-authored vector diagram.
+traceability without publishing a workstation path. README uses the paper's
+high-resolution Figure 2 at
+`docs/assets/paper_figure_2_gtpro_architecture.jpg`, with DOI, figure number,
+publisher copyright, and author-request attribution. The supplementary
+`docs/assets/architecture.svg` is an original project-authored vector diagram.
 
 ## Git history and links
 
-`git rev-list --all --count` reported zero commits reachable from normal branch
-or tag history. Consequently there is no public Git history to scan yet; the
-release audit must be rerun after staging/committing and before pushing.
+`git rev-list --all --count` reported eight commits after the optimized history
+was joined to the original repository with a non-destructive merge. The release
+audit must still be rerun before each tagged release.
 
 README local links were checked automatically. External links were checked on
 2026-08-27: the DOI/article, PubMed record, Tencent GROVER repository, and
@@ -39,6 +43,6 @@ work has an MIT license. The supplied original GTpro-derived files have no
 verifiable license, so public redistribution remains blocked pending author or
 rights-holder confirmation; see `LICENSE_SCOPE.md`.
 
-Remote CI, Git tags/releases, and formal checkpoint hosting cannot be verified
-in this local unborn repository. Draft release notes are available under
-`docs/releases/`; none claims that a release already exists.
+Remote CI, Git tags/releases, and formal checkpoint hosting have not yet been
+verified. Draft release notes are available under `docs/releases/`; none claims
+that a versioned release already exists.

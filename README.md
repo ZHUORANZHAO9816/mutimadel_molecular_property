@@ -1,18 +1,31 @@
-# GTpro Molecular Property Reproduction
+# GTpro: Graph-Text Alignment for Molecular Property Prediction
 
-> Reproduction engineering for *Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement* (Zhao et al., 2024).
+> Author-maintained implementation and reproducibility toolkit for *Boosting
+> the performance of molecular property prediction via graph-text alignment and
+> multi-granularity representation enhancement* (Zhao et al., 2024).
 
-GTpro aligns molecular graphs and SMILES text with contrastive learning and
-cross-attention, while supervising atom-, functional-group-, and
-molecule-level information. This repository turns the authors' research code
-into an installable, config-driven and CPU-testable project with audited data,
-resumable training, unified downstream evaluation, reproducible baselines, and
-a public encoding API. The included empirical results use an explicitly compact
-64-dimensional model and are not claimed to reproduce the paper-scale numbers.
+GTpro is the multimodal molecular representation model proposed in the paper.
+It aligns molecular graphs and SMILES text with contrastive learning and
+cross-attention, while injecting atom-, functional-group-, and molecule-level
+supervision through APP, FPG, and GTM objectives. This repository preserves
+that paper architecture and extends the research implementation with
+installable packaging, audited data processing, resumable training, unified
+downstream evaluation, reproducible baselines, tests, and a public encoding
+API. The included empirical results use an explicitly compact 64-dimensional
+model and are not claimed to reproduce the paper-scale numbers.
 
-![Original GTpro data-flow diagram](docs/assets/architecture.svg)
+## Architecture from the paper
 
-## Implemented capabilities
+![Figure 2: Overall architecture of GTpro](docs/assets/paper_figure_2_gtpro_architecture.jpg)
+
+*Figure 2 from Zhao et al. (2024): (A) graph and SMILES encoders with
+contrastive alignment and cross-attention; (B) the Transformer encoder block;
+and (C) atom property prediction (APP), functional-group prediction (FPG), and
+graph-text matching (GTM) pretraining objectives. Source: [Journal of Molecular
+Graphics and Modelling, DOI 10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
+© 2024 Elsevier Inc.; reproduced here by author request.*
+
+## Repository implementation
 
 - deterministic ChEMBL preprocessing with atomic shards, checksums, failures,
   duplicate accounting, and an auditable 12,008-row report;
