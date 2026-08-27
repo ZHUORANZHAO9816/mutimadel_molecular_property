@@ -5,7 +5,7 @@ type: software
 version: 0.1.0.dev0
 date-released: 2026-08-27
 license: MIT
-repository-code: "https://github.com/zzr624663649/mutimadel_molecular_property"
+repository-code: "https://github.com/ZHUORANZHAO9816/mutimadel_molecular_property"
 authors:
   - family-names: Zhao
     given-names: Zhuoran

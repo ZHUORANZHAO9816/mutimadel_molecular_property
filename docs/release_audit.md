@@ -28,7 +28,7 @@ README local links were checked automatically. External links were checked on
 2026-08-27: the DOI/article, PubMed record, Tencent GROVER repository, and
 corrected original repository resolved. The article's printed repository name
 uses `multimodal`; the accessible repository is
-`https://github.com/zzr624663649/mutimadel_molecular_property`. The latter has
+`https://github.com/ZHUORANZHAO9816/mutimadel_molecular_property`. The latter has
 five commits but no visible license file, so link correction does not remove the
 license gate.
 

@@ -191,7 +191,7 @@ encoder API.
   and Modelling* 132, 108843. [DOI](https://doi.org/10.1016/j.jmgm.2024.108843),
   [PubMed](https://pubmed.ncbi.nlm.nih.gov/39173218/).
 - Original source repository:
-  [zzr624663649/mutimadel_molecular_property](https://github.com/zzr624663649/mutimadel_molecular_property).
+  [ZHUORANZHAO9816/mutimadel_molecular_property](https://github.com/ZHUORANZHAO9816/mutimadel_molecular_property).
   The published article printed a near-identical URL with `multimodal` in the
   repository name; the accessible repository uses `mutimadel`.
 - GROVER upstream: [tencent-ailab/grover](https://github.com/tencent-ailab/grover).

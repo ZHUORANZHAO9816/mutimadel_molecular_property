@@ -54,7 +54,7 @@ dev = [
 
 [project.urls]
 "Paper" = "https://doi.org/10.1016/j.jmgm.2024.108843"
-"Original GTpro repository" = "https://github.com/zzr624663649/mutimadel_molecular_property"
+"Original GTpro repository" = "https://github.com/ZHUORANZHAO9816/mutimadel_molecular_property"
 "GROVER upstream" = "https://github.com/tencent-ailab/grover"
 
 [tool.setuptools.packages.find]

@@ -9,7 +9,7 @@ copyright and permission text are retained in `gtpro/graph_trans/NOTICE`. MIT is
 compatible with the root MIT license.
 
 The supplied GTpro research implementation corresponds to the accessible
-repository `zzr624663649/mutimadel_molecular_property`. The published article
+repository `ZHUORANZHAO9816/mutimadel_molecular_property`. The published article
 printed a near-identical repository name using `multimodal`, which returns 404.
 The accessible repository and supplied snapshot contain no visible software
 license. Therefore no permission to relicense those pre-existing files is
