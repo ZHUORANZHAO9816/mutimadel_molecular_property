@@ -1,0 +1,25 @@
+name: gtpro-reproduction
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.2
+  - pip=24.0
+  - pip:
+      # Versions observed during the successful 2026-08-26 CPU smoke baseline.
+      - torch==2.13.0
+      - numpy==1.26.4
+      - pandas==2.2.2
+      - scipy==1.13.1
+      - scikit-learn==1.4.2
+      - rdkit==2024.3.5
+      - requests==2.34.2
+      - tqdm==4.66.4
+      - einops==0.8.2
+      - descriptastorus==2.8.0
+      - pandas-flavor==0.8.1
+      - PyYAML==6.0.3
+      - CoCa-pytorch==0.1.0
+      - pytest==7.4.4
+      - build==1.5.0
+      - wheel==0.43.0
+      - -e .

@@ -1,0 +1,13 @@
+dataset: tox21
+split: scaffold
+fractions:
+- 0.8
+- 0.1
+- 0.1
+seed: 52
+model: morgan_logistic_or_ridge
+feature_count: 1024
+long_smiles_dropped: 6
+max_text_tokens: 200
+class_imbalance: balanced for classification
+test_used_for_selection: false

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">GTpro graph-text pretraining and downstream data flow</title>
+  <desc id="desc">A molecule produces graph and SMILES encodings, aligned with contrastive and cross-attention objectives, supervised at atom, functional-group and molecule levels, then pooled for prediction.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#315b7d"/></marker>
+    <style>
+      .box{rx:14;stroke-width:2}.label{font:600 18px sans-serif;fill:#183043}.small{font:14px sans-serif;fill:#29475d}.arrow{stroke:#315b7d;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1200" height="430" fill="#f7fafc"/>
+  <text x="35" y="38" class="label">One molecule</text>
+  <rect x="35" y="65" width="150" height="95" class="box" fill="#fff4d6" stroke="#c28a18"/>
+  <text x="68" y="105" class="label">SMILES</text><text x="63" y="133" class="small">canonical text</text>
+  <rect x="35" y="250" width="150" height="95" class="box" fill="#e2f4ea" stroke="#33845b"/>
+  <text x="75" y="290" class="label">Graph</text><text x="57" y="318" class="small">atoms + bonds</text>
+  <path d="M185 112 H250" class="arrow"/><path d="M185 297 H250" class="arrow"/>
+  <rect x="250" y="65" width="205" height="95" class="box" fill="#fff" stroke="#c28a18"/>
+  <text x="285" y="105" class="label">SMILES encoder</text><text x="280" y="133" class="small">global + token states</text>
+  <rect x="250" y="250" width="205" height="95" class="box" fill="#fff" stroke="#33845b"/>
+  <text x="301" y="290" class="label">GROVER</text><text x="281" y="318" class="small">atom + pooled states</text>
+  <path d="M455 112 C520 112 510 185 560 185" class="arrow"/>
+  <path d="M455 297 C520 297 510 225 560 225" class="arrow"/>
+  <rect x="560" y="145" width="250" height="125" class="box" fill="#e9e7fb" stroke="#6653aa"/>
+  <text x="611" y="183" class="label">Graph-text alignment</text>
+  <text x="602" y="211" class="small">contrastive global objective</text>
+  <text x="600" y="237" class="small">cross-attention token fusion</text>
+  <path d="M685 270 V323" class="arrow"/>
+  <rect x="525" y="323" width="320" height="78" class="box" fill="#f6e8f1" stroke="#9b4779"/>
+  <text x="557" y="355" class="label">Multi-granularity objectives</text>
+  <text x="572" y="382" class="small">atom · functional group · molecule</text>
+  <path d="M810 207 H875" class="arrow"/>
+  <rect x="875" y="145" width="285" height="125" class="box" fill="#e7f1fa" stroke="#3478a8"/>
+  <text x="930" y="183" class="label">Molecule embedding</text>
+  <text x="932" y="211" class="small">graph / text / joint</text>
+  <text x="908" y="239" class="small">downstream prediction head</text>
+  <text x="875" y="310" class="small">Pretraining: alignment + granular losses</text>
+  <text x="875" y="336" class="small">Fine-tuning: masked task loss + validation selection</text>
+  <text x="875" y="382" class="small">Original diagram created for this repository (2026)</text>
+</svg>

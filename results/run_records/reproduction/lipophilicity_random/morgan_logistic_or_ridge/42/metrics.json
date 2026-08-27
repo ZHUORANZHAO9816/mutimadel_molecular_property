@@ -1,0 +1,38 @@
+{
+  "dataset": "lipophilicity",
+  "split": "random",
+  "fractions": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "seed": 42,
+  "model": "morgan_logistic_or_ridge",
+  "feature_count": 1024,
+  "long_smiles_dropped": 1,
+  "max_text_tokens": 200,
+  "class_imbalance": "balanced for classification",
+  "test_used_for_selection": false,
+  "task_type": "regression",
+  "split_sizes": {
+    "train": 3359,
+    "validation": 420,
+    "test": 420
+  },
+  "parameter_count": 1025,
+  "parameter_count_definition": "fitted scalar coefficients",
+  "validation": {
+    "rmse": 1.0408141474293207,
+    "mae": 0.7906851044456874,
+    "r2": 0.2010684221139678,
+    "valid_labels": 420,
+    "warnings": []
+  },
+  "test": {
+    "rmse": 0.9301773330081975,
+    "mae": 0.7187645568822821,
+    "r2": 0.4073740348653252,
+    "valid_labels": 420,
+    "warnings": []
+  }
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="306" viewBox="0 0 900 306">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="32" font-family="sans-serif" font-size="20" font-weight="bold">Compact GTpro: random vs scaffold</text>
+<text x="20" y="78" font-family="sans-serif" font-size="13">bace / random / roc_auc</text>
+<rect x="250" y="62" width="330.9" height="22" fill="#3973ac"/>
+<text x="590.9" y="78" font-family="monospace" font-size="13">0.6296</text>
+<text x="20" y="114" font-family="sans-serif" font-size="13">bace / scaffold / roc_auc</text>
+<rect x="250" y="98" width="247.0" height="22" fill="#3973ac"/>
+<text x="507.0" y="114" font-family="monospace" font-size="13">0.4700</text>
+<text x="20" y="150" font-family="sans-serif" font-size="13">lipophilicity / random / rmse</text>
+<rect x="250" y="134" width="600.0" height="22" fill="#3973ac"/>
+<text x="860.0" y="150" font-family="monospace" font-size="13">1.1416</text>
+<text x="20" y="186" font-family="sans-serif" font-size="13">lipophilicity / scaffold / rmse</text>
+<rect x="250" y="170" width="576.9" height="22" fill="#3973ac"/>
+<text x="836.9" y="186" font-family="monospace" font-size="13">1.0976</text>
+<text x="20" y="222" font-family="sans-serif" font-size="13">tox21 / random / macro_roc_auc</text>
+<rect x="250" y="206" width="362.9" height="22" fill="#3973ac"/>
+<text x="622.9" y="222" font-family="monospace" font-size="13">0.6906</text>
+<text x="20" y="258" font-family="sans-serif" font-size="13">tox21 / scaffold / macro_roc_auc</text>
+<rect x="250" y="242" width="352.5" height="22" fill="#3973ac"/>
+<text x="612.5" y="258" font-family="monospace" font-size="13">0.6707</text>
+</svg>

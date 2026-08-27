@@ -1,0 +1,36 @@
+{
+  "dataset": "bace",
+  "split": "scaffold",
+  "fractions": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "seed": 52,
+  "model": "morgan_random_forest",
+  "feature_count": 1024,
+  "long_smiles_dropped": 0,
+  "max_text_tokens": 200,
+  "class_imbalance": "balanced for classification",
+  "test_used_for_selection": false,
+  "task_type": "binary_classification",
+  "split_sizes": {
+    "train": 1209,
+    "validation": 152,
+    "test": 152
+  },
+  "parameter_count": 28622,
+  "parameter_count_definition": "total fitted decision-tree nodes",
+  "validation": {
+    "roc_auc": 0.880859375,
+    "pr_auc": 0.846957744067757,
+    "valid_labels": 152,
+    "warnings": []
+  },
+  "test": {
+    "roc_auc": 0.8450928381962864,
+    "pr_auc": 0.8011082238974209,
+    "valid_labels": 152,
+    "warnings": []
+  }
+}

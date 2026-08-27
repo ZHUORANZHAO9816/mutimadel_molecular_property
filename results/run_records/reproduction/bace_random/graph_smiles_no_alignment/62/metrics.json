@@ -1,0 +1,36 @@
+{
+  "dataset": "bace",
+  "split": "random",
+  "fractions": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "seed": 62,
+  "model": "graph_smiles_no_alignment",
+  "feature_count": 2060,
+  "long_smiles_dropped": 0,
+  "max_text_tokens": 200,
+  "class_imbalance": "balanced for classification",
+  "test_used_for_selection": false,
+  "task_type": "binary_classification",
+  "split_sizes": {
+    "train": 1209,
+    "validation": 152,
+    "test": 152
+  },
+  "parameter_count": 2061,
+  "parameter_count_definition": "fitted scalar coefficients",
+  "validation": {
+    "roc_auc": 0.9076576576576577,
+    "pr_auc": 0.9064323796197205,
+    "valid_labels": 152,
+    "warnings": []
+  },
+  "test": {
+    "roc_auc": 0.8827813421189526,
+    "pr_auc": 0.8253568753529875,
+    "valid_labels": 152,
+    "warnings": []
+  }
+}

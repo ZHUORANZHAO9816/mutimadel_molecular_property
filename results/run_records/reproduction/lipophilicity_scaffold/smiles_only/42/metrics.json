@@ -1,0 +1,38 @@
+{
+  "dataset": "lipophilicity",
+  "split": "scaffold",
+  "fractions": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "seed": 42,
+  "model": "smiles_only",
+  "feature_count": 2048,
+  "long_smiles_dropped": 1,
+  "max_text_tokens": 200,
+  "class_imbalance": "balanced for classification",
+  "test_used_for_selection": false,
+  "task_type": "regression",
+  "split_sizes": {
+    "train": 3359,
+    "validation": 420,
+    "test": 420
+  },
+  "parameter_count": 2049,
+  "parameter_count_definition": "fitted scalar coefficients",
+  "validation": {
+    "rmse": 0.9409145295275909,
+    "mae": 0.7609572737455088,
+    "r2": 0.49799804381309676,
+    "valid_labels": 420,
+    "warnings": []
+  },
+  "test": {
+    "rmse": 0.9548282057029374,
+    "mae": 0.72927382916974,
+    "r2": 0.33550043579490274,
+    "valid_labels": 420,
+    "warnings": []
+  }
+}

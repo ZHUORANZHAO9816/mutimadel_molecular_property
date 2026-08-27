@@ -1,0 +1,24 @@
+name: Reproduction report
+description: Report a traceable empirical run or discrepancy
+title: "[Reproduction] "
+labels: [reproduction]
+body:
+  - type: input
+    id: config
+    attributes:
+      label: Resolved config path
+    validations:
+      required: true
+  - type: input
+    id: metrics
+    attributes:
+      label: Metrics/environment record path
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Scope and comparison
+      description: Distinguish project-measured, smoke, and paper-reported values.
+    validations:
+      required: true

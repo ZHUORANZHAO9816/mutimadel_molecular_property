@@ -1,0 +1,62 @@
+# macOS and editor metadata
+.DS_Store
+**/.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Local assistant and machine-specific configuration
+.claude/
+.env
+.env.*
+!.env.example
+
+# Python bytecode, tooling caches, and build output
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Logs, notebooks, and temporary files
+*.log
+logs/
+.ipynb_checkpoints/
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Training outputs and model weights
+checkpoints/*.pth
+checkpoints/*.pt
+checkpoints/*.ckpt
+runs/*
+!runs/README.md
+artifacts/*
+!artifacts/README.md
+
+# Full/generated pretraining data. Keep only documented smoke fixtures.
+data/pretrain_data/*
+!data/pretrain_data/README.md
+!data/pretrain_data/gtpro_smoke_*.npy
+
+# Full downstream dataset copies stay local. Dataset provenance READMEs remain.
+data/downstream/**/raw/

@@ -1,0 +1,13 @@
+dataset: lipophilicity
+split: random
+fractions:
+- 0.8
+- 0.1
+- 0.1
+seed: 42
+model: morgan_logistic_or_ridge
+feature_count: 1024
+long_smiles_dropped: 1
+max_text_tokens: 200
+class_imbalance: balanced for classification
+test_used_for_selection: false

@@ -1,0 +1,36 @@
+{
+  "dataset": "bace",
+  "split": "scaffold",
+  "fractions": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "seed": 52,
+  "model": "morgan_logistic_or_ridge",
+  "feature_count": 1024,
+  "long_smiles_dropped": 0,
+  "max_text_tokens": 200,
+  "class_imbalance": "balanced for classification",
+  "test_used_for_selection": false,
+  "task_type": "binary_classification",
+  "split_sizes": {
+    "train": 1209,
+    "validation": 152,
+    "test": 152
+  },
+  "parameter_count": 1025,
+  "parameter_count_definition": "fitted scalar coefficients",
+  "validation": {
+    "roc_auc": 0.8201264880952381,
+    "pr_auc": 0.743350805176864,
+    "valid_labels": 152,
+    "warnings": []
+  },
+  "test": {
+    "roc_auc": 0.8610079575596817,
+    "pr_auc": 0.8327137877072045,
+    "valid_labels": 152,
+    "warnings": []
+  }
+}

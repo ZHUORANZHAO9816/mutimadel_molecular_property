@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="378" viewBox="0 0 900 378">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="32" font-family="sans-serif" font-size="20" font-weight="bold">BACE random one-seed ablation ROC-AUC</text>
+<text x="20" y="78" font-family="sans-serif" font-size="13">full_model</text>
+<rect x="250" y="62" width="577.6" height="22" fill="#3973ac"/>
+<text x="837.6" y="78" font-family="monospace" font-size="13">0.6488</text>
+<text x="20" y="114" font-family="sans-serif" font-size="13">graph_only</text>
+<rect x="250" y="98" width="570.9" height="22" fill="#3973ac"/>
+<text x="830.9" y="114" font-family="monospace" font-size="13">0.6413</text>
+<text x="20" y="150" font-family="sans-serif" font-size="13">no_atom_objective</text>
+<rect x="250" y="134" width="582.1" height="22" fill="#3973ac"/>
+<text x="842.1" y="150" font-family="monospace" font-size="13">0.6538</text>
+<text x="20" y="186" font-family="sans-serif" font-size="13">no_contrastive</text>
+<rect x="250" y="170" width="600.0" height="22" fill="#3973ac"/>
+<text x="860.0" y="186" font-family="monospace" font-size="13">0.6740</text>
+<text x="20" y="222" font-family="sans-serif" font-size="13">no_cross_attention</text>
+<rect x="250" y="206" width="527.5" height="22" fill="#3973ac"/>
+<text x="787.5" y="222" font-family="monospace" font-size="13">0.5925</text>
+<text x="20" y="258" font-family="sans-serif" font-size="13">no_functional_group_objective</text>
+<rect x="250" y="242" width="534.5" height="22" fill="#3973ac"/>
+<text x="794.5" y="258" font-family="monospace" font-size="13">0.6003</text>
+<text x="20" y="294" font-family="sans-serif" font-size="13">no_molecule_objective</text>
+<rect x="250" y="278" width="568.3" height="22" fill="#3973ac"/>
+<text x="828.3" y="294" font-family="monospace" font-size="13">0.6384</text>
+<text x="20" y="330" font-family="sans-serif" font-size="13">text_only</text>
+<rect x="250" y="314" width="530.1" height="22" fill="#3973ac"/>
+<text x="790.1" y="330" font-family="monospace" font-size="13">0.5955</text>
+</svg>

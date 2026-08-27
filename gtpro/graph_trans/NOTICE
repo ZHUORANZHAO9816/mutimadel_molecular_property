@@ -1,0 +1,13 @@
+GROVER upstream attribution
+===========================
+
+The files in this package are derived from GROVER by Tencent AI Lab:
+https://github.com/tencent-ailab/grover
+
+GROVER is distributed under the MIT License.
+Copyright (c) 2021 Tencent AI Lab. All rights reserved.
+Full license text: https://github.com/tencent-ailab/grover/blob/main/LICENSE
+
+The upstream GROVER license also records incorporated Chemprop code under the
+MIT License, copyright (c) 2020 Wengong Jin, Kyle Swanson, Kevin Yang, Regina
+Barzilay, Tommi Jaakkola.

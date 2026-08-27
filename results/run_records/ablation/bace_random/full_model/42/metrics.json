@@ -1,0 +1,132 @@
+{
+  "dataset": "bace",
+  "task_type": "binary_classification",
+  "seed": 42,
+  "split": {
+    "method": "random",
+    "fractions": [
+      0.8,
+      0.1,
+      0.1
+    ],
+    "sizes": {
+      "train": 1209,
+      "validation": 152,
+      "test": 152
+    }
+  },
+  "data_filtering": {
+    "long_smiles_dropped": 0,
+    "max_text_tokens": 200
+  },
+  "encoder_mode": "frozen",
+  "parameter_counts": {
+    "trainable": 8321,
+    "total": 568778
+  },
+  "representation": "joint",
+  "checkpoint_load": {
+    "source": "${PROJECT_ROOT}/runs/ablation/pretrain/full_model/42/checkpoints/best.pt",
+    "strict": true,
+    "text": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatches": [],
+      "mismatch_fraction": 0.0
+    },
+    "graph": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatches": [],
+      "mismatch_fraction": 0.0
+    }
+  },
+  "class_imbalance": {
+    "configured": "auto",
+    "effective_positive_weights": [
+      1.222426414489746
+    ],
+    "warnings": []
+  },
+  "best_epoch": 0,
+  "best_selection_value": 0.6715151515151515,
+  "selection_metric": "roc_auc",
+  "history": [
+    {
+      "epoch": 0,
+      "train": {
+        "loss": 0.7630083765541846,
+        "valid_labels": 1209,
+        "batches": 38,
+        "skipped_batches": 0
+      },
+      "validation": {
+        "loss": 0.7627826740867213,
+        "valid_labels": 152,
+        "batches": 5,
+        "skipped_batches": 0
+      },
+      "validation_metrics": {
+        "roc_auc": 0.6715151515151515,
+        "pr_auc": 0.6569775034620288,
+        "valid_labels": 152,
+        "warnings": []
+      },
+      "selection_value": 0.6715151515151515,
+      "selection_fallback_to_loss": false
+    },
+    {
+      "epoch": 1,
+      "train": {
+        "loss": 0.7606802403778947,
+        "valid_labels": 1209,
+        "batches": 38,
+        "skipped_batches": 0
+      },
+      "validation": {
+        "loss": 0.771200766688899,
+        "valid_labels": 152,
+        "batches": 5,
+        "skipped_batches": 0
+      },
+      "validation_metrics": {
+        "roc_auc": 0.6420779220779221,
+        "pr_auc": 0.6279141849652952,
+        "valid_labels": 152,
+        "warnings": []
+      },
+      "selection_value": 0.6420779220779221,
+      "selection_fallback_to_loss": false
+    }
+  ],
+  "final": {
+    "validation": {
+      "epoch": {
+        "loss": 0.7627826740867213,
+        "valid_labels": 152,
+        "batches": 5,
+        "skipped_batches": 0
+      },
+      "metrics": {
+        "roc_auc": 0.6715151515151515,
+        "pr_auc": 0.6569775034620288,
+        "valid_labels": 152,
+        "warnings": []
+      }
+    },
+    "test": {
+      "epoch": {
+        "loss": 0.7611222047554819,
+        "valid_labels": 152,
+        "batches": 5,
+        "skipped_batches": 0
+      },
+      "metrics": {
+        "roc_auc": 0.6487847222222222,
+        "pr_auc": 0.6229828800095116,
+        "valid_labels": 152,
+        "warnings": []
+      }
+    }
+  }
+}

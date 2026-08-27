@@ -1,0 +1,60 @@
+seed: 42
+device: cpu
+
+data:
+  path: artifacts/pretrain/CHEMBL_smiles
+  validation_fraction: 0.1
+  max_samples: null
+
+model:
+  text:
+    d_model: 64
+    n_layers: 1
+    vocab_size: 47
+    max_length: 201
+    d_k: 16
+    d_v: 16
+    n_heads: 4
+    d_ff: 256
+    global_label_dim: 154
+    atom_label_dim: 15
+  grover:
+    checkpoint: null
+    hidden_size: 64
+    backbone: dualtrans
+    embedding_output_type: both
+    dropout: 0.0
+    activation: PReLU
+    num_mt_block: 1
+    num_attn_head: 4
+    bias: false
+    depth: 3
+    dense: false
+    undirected: false
+    bond_drop_rate: 0.0
+    features_only: false
+    no_cache: true
+    freeze: false
+  alignment:
+    unimodal_depth: 1
+    multimodal_depth: 1
+    dim_head: 16
+    heads: 4
+    functional_group_dim: 85
+    caption_loss_weight: 1.0
+    contrastive_loss_weight: 1.0
+    functional_group_loss_weight: 1.0
+    use_cross_attention: true
+
+training:
+  batch_size: 32
+  epochs: 1
+  learning_rate: 0.0001
+  gradient_clip_norm: 1.0
+  mixed_precision: false
+  molecule_loss_weight: 1.0
+  resume_from: null
+
+output:
+  root: runs/pretrain_reproduction_compact
+  run_id: compact_v1

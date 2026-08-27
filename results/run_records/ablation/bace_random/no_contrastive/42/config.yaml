@@ -1,0 +1,64 @@
+seeds:
+- 42
+device: cpu
+data:
+  dataset: bace
+  root: ${PROJECT_ROOT}/data/downstream
+  split: random
+  fractions:
+  - 0.8
+  - 0.1
+  - 0.1
+  max_samples: null
+  invalid_smiles: drop
+  long_smiles_dropped: 0
+model:
+  pretrained_checkpoint: ${PROJECT_ROOT}/runs/ablation/pretrain/no_contrastive/42/checkpoints/best.pt
+  strict_checkpoint: true
+  max_checkpoint_mismatch_fraction: 0.0
+  encoder_mode: frozen
+  representation: joint
+  partial_text_layers: 1
+  head_hidden_dim: 64
+  head_dropout: 0.1
+  text:
+    d_model: 64
+    n_layers: 1
+    vocab_size: 47
+    max_length: 201
+    d_k: 16
+    d_v: 16
+    n_heads: 4
+    d_ff: 256
+    global_label_dim: 154
+    atom_label_dim: 15
+  grover:
+    hidden_size: 64
+    backbone: dualtrans
+    embedding_output_type: both
+    dropout: 0.0
+    activation: PReLU
+    num_mt_block: 1
+    num_attn_head: 4
+    bias: false
+    depth: 3
+    dense: false
+    undirected: false
+    bond_drop_rate: 0.0
+    features_only: false
+    no_cache: true
+training:
+  batch_size: 32
+  epochs: 2
+  learning_rate: 0.001
+  weight_decay: 0.0
+  gradient_clip_norm: 1.0
+  class_imbalance: auto
+  early_stopping_patience: 2
+  early_stopping_min_delta: 0.0
+output:
+  root: ${PROJECT_ROOT}/runs/ablation/bace_random/no_contrastive
+  run_id: '{seed}'
+  formal_layout: true
+config_source: ${PROJECT_ROOT}/configs/finetune_reproduction_compact.yaml
+seed: 42

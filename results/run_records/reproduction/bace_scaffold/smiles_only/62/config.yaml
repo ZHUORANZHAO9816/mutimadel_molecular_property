@@ -1,0 +1,13 @@
+dataset: bace
+split: scaffold
+fractions:
+- 0.8
+- 0.1
+- 0.1
+seed: 62
+model: smiles_only
+feature_count: 2048
+long_smiles_dropped: 0
+max_text_tokens: 200
+class_imbalance: balanced for classification
+test_used_for_selection: false

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "scripts/run_ablations.py"
+  ],
+  "config_source": "${PROJECT_ROOT}/configs/finetune_reproduction_compact.yaml",
+  "device": "cpu",
+  "duration_seconds": 13.620196,
+  "ended_at": "2026-08-27T04:57:32.892690+00:00",
+  "environment": {
+    "cuda_available": false,
+    "machine": "arm64",
+    "mps_available": false,
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 20:54:21) [Clang 16.0.6 ]",
+    "pytorch": "2.13.0"
+  },
+  "git": {
+    "commit": null,
+    "dirty": true
+  },
+  "run_directory": "${PROJECT_ROOT}/runs/ablation/bace_random/no_molecule_objective/42",
+  "seed": 42,
+  "started_at": "2026-08-27T04:57:19.272520+00:00",
+  "status": "success"
+}

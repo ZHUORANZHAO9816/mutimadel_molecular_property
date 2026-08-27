@@ -1,0 +1,9 @@
+dataset,split,model,metric,mean,standard_deviation,valid_runs,seeds,mean_parameter_count,mean_trainable_parameter_count,result_scope
+bace,random,full_model,roc_auc,0.6487847222222222,0.0,1,42,568778,8321,project-measured compact empirical reproduction
+bace,random,graph_only,roc_auc,0.6413194444444444,0.0,1,42,564682,4225,project-measured compact empirical reproduction
+bace,random,no_atom_objective,roc_auc,0.6538194444444445,0.0,1,42,568778,8321,project-measured compact empirical reproduction
+bace,random,no_contrastive,roc_auc,0.6739583333333333,0.0,1,42,568778,8321,project-measured compact empirical reproduction
+bace,random,no_cross_attention,roc_auc,0.5925347222222221,0.0,1,42,568778,8321,project-measured compact empirical reproduction
+bace,random,no_functional_group_objective,roc_auc,0.6003472222222223,0.0,1,42,568778,8321,project-measured compact empirical reproduction
+bace,random,no_molecule_objective,roc_auc,0.6383680555555555,0.0,1,42,568778,8321,project-measured compact empirical reproduction
+bace,random,text_only,roc_auc,0.5954861111111112,0.0,1,42,564682,4225,project-measured compact empirical reproduction

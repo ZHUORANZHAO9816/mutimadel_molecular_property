@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "Please cite the original GTpro paper and identify this repository as a compact engineering reproduction."
+title: "GTpro Molecular Property Reproduction"
+type: software
+version: 0.1.0.dev0
+date-released: 2026-08-27
+license: MIT
+repository-code: "https://github.com/zzr624663649/mutimadel_molecular_property"
+authors:
+  - family-names: Zhao
+    given-names: Zhuoran
+  - family-names: Zhou
+    given-names: Qing
+  - family-names: Wu
+    given-names: Chengkai
+  - family-names: Su
+    given-names: Renbin
+  - family-names: Xiong
+    given-names: Weihong
+preferred-citation:
+  type: article
+  title: "Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement"
+  authors:
+    - family-names: Zhao
+      given-names: Zhuoran
+    - family-names: Zhou
+      given-names: Qing
+    - family-names: Wu
+      given-names: Chengkai
+    - family-names: Su
+      given-names: Renbin
+    - family-names: Xiong
+      given-names: Weihong
+  journal: "Journal of Molecular Graphics and Modelling"
+  volume: 132
+  year: 2024
+  doi: 10.1016/j.jmgm.2024.108843
+  start: 108843

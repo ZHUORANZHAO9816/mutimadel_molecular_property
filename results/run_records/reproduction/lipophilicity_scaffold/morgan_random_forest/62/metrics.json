@@ -1,0 +1,38 @@
+{
+  "dataset": "lipophilicity",
+  "split": "scaffold",
+  "fractions": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "seed": 62,
+  "model": "morgan_random_forest",
+  "feature_count": 1024,
+  "long_smiles_dropped": 1,
+  "max_text_tokens": 200,
+  "class_imbalance": "balanced for classification",
+  "test_used_for_selection": false,
+  "task_type": "regression",
+  "split_sizes": {
+    "train": 3359,
+    "validation": 420,
+    "test": 420
+  },
+  "parameter_count": 203138,
+  "parameter_count_definition": "total fitted decision-tree nodes",
+  "validation": {
+    "rmse": 0.9322382996065288,
+    "mae": 0.7392500777334473,
+    "r2": 0.44642075293991745,
+    "valid_labels": 420,
+    "warnings": []
+  },
+  "test": {
+    "rmse": 0.8870750234475828,
+    "mae": 0.6864281491297831,
+    "r2": 0.378191901392136,
+    "valid_labels": 420,
+    "warnings": []
+  }
+}

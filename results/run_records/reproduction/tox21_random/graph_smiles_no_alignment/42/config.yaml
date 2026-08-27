@@ -1,0 +1,13 @@
+dataset: tox21
+split: random
+fractions:
+- 0.8
+- 0.1
+- 0.1
+seed: 42
+model: graph_smiles_no_alignment
+feature_count: 2060
+long_smiles_dropped: 6
+max_text_tokens: 200
+class_imbalance: balanced for classification
+test_used_for_selection: false

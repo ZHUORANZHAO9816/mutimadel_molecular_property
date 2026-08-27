@@ -1,0 +1,443 @@
+{
+  "dataset": "tox21",
+  "task_type": "multilabel_classification",
+  "seed": 52,
+  "split": {
+    "method": "scaffold",
+    "fractions": [
+      0.8,
+      0.1,
+      0.1
+    ],
+    "sizes": {
+      "train": 5645,
+      "validation": 1474,
+      "test": 706
+    }
+  },
+  "data_filtering": {
+    "long_smiles_dropped": 6,
+    "max_text_tokens": 200
+  },
+  "encoder_mode": "frozen",
+  "parameter_counts": {
+    "trainable": 9036,
+    "total": 569493
+  },
+  "representation": "joint",
+  "checkpoint_load": {
+    "source": "${PROJECT_ROOT}/runs/pretrain_reproduction_compact/compact_v1/checkpoints/best.pt",
+    "strict": true,
+    "text": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatches": [],
+      "mismatch_fraction": 0.0
+    },
+    "graph": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatches": [],
+      "mismatch_fraction": 0.0
+    }
+  },
+  "class_imbalance": {
+    "configured": "auto",
+    "effective_positive_weights": [
+      21.921052932739258,
+      27.374269485473633,
+      8.250489234924316,
+      16.82203483581543,
+      7.21626615524292,
+      19.974790573120117,
+      31.794326782226562,
+      4.9238505363464355,
+      24.532663345336914,
+      15.507194519042969,
+      5.988215446472168,
+      14.080745697021484
+    ],
+    "warnings": []
+  },
+  "best_epoch": 0,
+  "best_selection_value": 0.5194018435893818,
+  "selection_metric": "macro_roc_auc",
+  "history": [
+    {
+      "epoch": 0,
+      "train": {
+        "loss": 1.1966104241832665,
+        "valid_labels": 55872,
+        "batches": 177,
+        "skipped_batches": 0
+      },
+      "validation": {
+        "loss": 1.154338821078622,
+        "valid_labels": 15330,
+        "batches": 47,
+        "skipped_batches": 0
+      },
+      "validation_metrics": {
+        "macro_roc_auc": 0.5194018435893818,
+        "macro_pr_auc": 0.07912316302498835,
+        "valid_tasks": 12,
+        "total_tasks": 12,
+        "tasks": {
+          "NR-AR": {
+            "roc_auc": 0.6548232695139912,
+            "pr_auc": 0.08744468886636184,
+            "valid_labels": 1382,
+            "warnings": []
+          },
+          "NR-AR-LBD": {
+            "roc_auc": 0.5873452012383901,
+            "pr_auc": 0.02732272500602712,
+            "valid_labels": 1312,
+            "warnings": []
+          },
+          "NR-AhR": {
+            "roc_auc": 0.6046978177840946,
+            "pr_auc": 0.18205030827955748,
+            "valid_labels": 1246,
+            "warnings": []
+          },
+          "NR-Aromatase": {
+            "roc_auc": 0.371205314601541,
+            "pr_auc": 0.021784912676265616,
+            "valid_labels": 1146,
+            "warnings": []
+          },
+          "NR-ER": {
+            "roc_auc": 0.39406541681153223,
+            "pr_auc": 0.09038936572818888,
+            "valid_labels": 1215,
+            "warnings": []
+          },
+          "NR-ER-LBD": {
+            "roc_auc": 0.44840348330914365,
+            "pr_auc": 0.0442310674194831,
+            "valid_labels": 1353,
+            "warnings": []
+          },
+          "NR-PPAR-gamma": {
+            "roc_auc": 0.5075802051317471,
+            "pr_auc": 0.028218262104442914,
+            "valid_labels": 1282,
+            "warnings": []
+          },
+          "SR-ARE": {
+            "roc_auc": 0.5705201634948323,
+            "pr_auc": 0.15270352008737229,
+            "valid_labels": 1224,
+            "warnings": []
+          },
+          "SR-ATAD5": {
+            "roc_auc": 0.5286038224813735,
+            "pr_auc": 0.0306088634930827,
+            "valid_labels": 1358,
+            "warnings": []
+          },
+          "SR-HSE": {
+            "roc_auc": 0.4803328391500047,
+            "pr_auc": 0.047462550080013544,
+            "valid_labels": 1328,
+            "warnings": []
+          },
+          "SR-MMP": {
+            "roc_auc": 0.4912812080827312,
+            "pr_auc": 0.17703680399928334,
+            "valid_labels": 1159,
+            "warnings": []
+          },
+          "SR-p53": {
+            "roc_auc": 0.5939633814732007,
+            "pr_auc": 0.060224888559781586,
+            "valid_labels": 1325,
+            "warnings": []
+          }
+        },
+        "warnings": []
+      },
+      "selection_value": 0.5194018435893818,
+      "selection_fallback_to_loss": false
+    },
+    {
+      "epoch": 1,
+      "train": {
+        "loss": 1.1344160914126642,
+        "valid_labels": 55872,
+        "batches": 177,
+        "skipped_batches": 0
+      },
+      "validation": {
+        "loss": 1.1310729982101755,
+        "valid_labels": 15330,
+        "batches": 47,
+        "skipped_batches": 0
+      },
+      "validation_metrics": {
+        "macro_roc_auc": 0.5139324494746473,
+        "macro_pr_auc": 0.07329543044603219,
+        "valid_tasks": 12,
+        "total_tasks": 12,
+        "tasks": {
+          "NR-AR": {
+            "roc_auc": 0.5765832106038291,
+            "pr_auc": 0.04164724717358686,
+            "valid_labels": 1382,
+            "warnings": []
+          },
+          "NR-AR-LBD": {
+            "roc_auc": 0.5780959752321981,
+            "pr_auc": 0.02604774115274895,
+            "valid_labels": 1312,
+            "warnings": []
+          },
+          "NR-AhR": {
+            "roc_auc": 0.5924034789118751,
+            "pr_auc": 0.17354140490512832,
+            "valid_labels": 1246,
+            "warnings": []
+          },
+          "NR-Aromatase": {
+            "roc_auc": 0.3374717525660922,
+            "pr_auc": 0.02052968285472896,
+            "valid_labels": 1146,
+            "warnings": []
+          },
+          "NR-ER": {
+            "roc_auc": 0.38805461207242387,
+            "pr_auc": 0.09068514882728397,
+            "valid_labels": 1215,
+            "warnings": []
+          },
+          "NR-ER-LBD": {
+            "roc_auc": 0.4737735849056603,
+            "pr_auc": 0.04429488396453525,
+            "valid_labels": 1353,
+            "warnings": []
+          },
+          "NR-PPAR-gamma": {
+            "roc_auc": 0.5346202990641296,
+            "pr_auc": 0.02532965146154011,
+            "valid_labels": 1282,
+            "warnings": []
+          },
+          "SR-ARE": {
+            "roc_auc": 0.5676368748535576,
+            "pr_auc": 0.14148600731494637,
+            "valid_labels": 1224,
+            "warnings": []
+          },
+          "SR-ATAD5": {
+            "roc_auc": 0.5462045135514524,
+            "pr_auc": 0.031804943806703234,
+            "valid_labels": 1358,
+            "warnings": []
+          },
+          "SR-HSE": {
+            "roc_auc": 0.4940898345153665,
+            "pr_auc": 0.04799543854799401,
+            "valid_labels": 1328,
+            "warnings": []
+          },
+          "SR-MMP": {
+            "roc_auc": 0.48376314309203405,
+            "pr_auc": 0.1640011860743713,
+            "valid_labels": 1159,
+            "warnings": []
+          },
+          "SR-p53": {
+            "roc_auc": 0.5944921143271498,
+            "pr_auc": 0.07218182926881897,
+            "valid_labels": 1325,
+            "warnings": []
+          }
+        },
+        "warnings": []
+      },
+      "selection_value": 0.5139324494746473,
+      "selection_fallback_to_loss": false
+    }
+  ],
+  "final": {
+    "validation": {
+      "epoch": {
+        "loss": 1.154338821078622,
+        "valid_labels": 15330,
+        "batches": 47,
+        "skipped_batches": 0
+      },
+      "metrics": {
+        "macro_roc_auc": 0.5194018435893818,
+        "macro_pr_auc": 0.07912316302498835,
+        "valid_tasks": 12,
+        "total_tasks": 12,
+        "tasks": {
+          "NR-AR": {
+            "roc_auc": 0.6548232695139912,
+            "pr_auc": 0.08744468886636184,
+            "valid_labels": 1382,
+            "warnings": []
+          },
+          "NR-AR-LBD": {
+            "roc_auc": 0.5873452012383901,
+            "pr_auc": 0.02732272500602712,
+            "valid_labels": 1312,
+            "warnings": []
+          },
+          "NR-AhR": {
+            "roc_auc": 0.6046978177840946,
+            "pr_auc": 0.18205030827955748,
+            "valid_labels": 1246,
+            "warnings": []
+          },
+          "NR-Aromatase": {
+            "roc_auc": 0.371205314601541,
+            "pr_auc": 0.021784912676265616,
+            "valid_labels": 1146,
+            "warnings": []
+          },
+          "NR-ER": {
+            "roc_auc": 0.39406541681153223,
+            "pr_auc": 0.09038936572818888,
+            "valid_labels": 1215,
+            "warnings": []
+          },
+          "NR-ER-LBD": {
+            "roc_auc": 0.44840348330914365,
+            "pr_auc": 0.0442310674194831,
+            "valid_labels": 1353,
+            "warnings": []
+          },
+          "NR-PPAR-gamma": {
+            "roc_auc": 0.5075802051317471,
+            "pr_auc": 0.028218262104442914,
+            "valid_labels": 1282,
+            "warnings": []
+          },
+          "SR-ARE": {
+            "roc_auc": 0.5705201634948323,
+            "pr_auc": 0.15270352008737229,
+            "valid_labels": 1224,
+            "warnings": []
+          },
+          "SR-ATAD5": {
+            "roc_auc": 0.5286038224813735,
+            "pr_auc": 0.0306088634930827,
+            "valid_labels": 1358,
+            "warnings": []
+          },
+          "SR-HSE": {
+            "roc_auc": 0.4803328391500047,
+            "pr_auc": 0.047462550080013544,
+            "valid_labels": 1328,
+            "warnings": []
+          },
+          "SR-MMP": {
+            "roc_auc": 0.4912812080827312,
+            "pr_auc": 0.17703680399928334,
+            "valid_labels": 1159,
+            "warnings": []
+          },
+          "SR-p53": {
+            "roc_auc": 0.5939633814732007,
+            "pr_auc": 0.060224888559781586,
+            "valid_labels": 1325,
+            "warnings": []
+          }
+        },
+        "warnings": []
+      }
+    },
+    "test": {
+      "epoch": {
+        "loss": 1.4553503052536148,
+        "valid_labels": 6690,
+        "batches": 23,
+        "skipped_batches": 0
+      },
+      "metrics": {
+        "macro_roc_auc": 0.6554752006175936,
+        "macro_pr_auc": 0.23604786699378852,
+        "valid_tasks": 12,
+        "total_tasks": 12,
+        "tasks": {
+          "NR-AR": {
+            "roc_auc": 0.8120348139255703,
+            "pr_auc": 0.3916446679068903,
+            "valid_labels": 651,
+            "warnings": []
+          },
+          "NR-AR-LBD": {
+            "roc_auc": 0.9347023905021659,
+            "pr_auc": 0.5228811827349128,
+            "valid_labels": 588,
+            "warnings": []
+          },
+          "NR-AhR": {
+            "roc_auc": 0.7607497480108946,
+            "pr_auc": 0.3655505316321791,
+            "valid_labels": 570,
+            "warnings": []
+          },
+          "NR-Aromatase": {
+            "roc_auc": 0.4721272484019623,
+            "pr_auc": 0.06418564274477884,
+            "valid_labels": 465,
+            "warnings": []
+          },
+          "NR-ER": {
+            "roc_auc": 0.5638769363166953,
+            "pr_auc": 0.25619371179245465,
+            "valid_labels": 527,
+            "warnings": []
+          },
+          "NR-ER-LBD": {
+            "roc_auc": 0.5656244090020803,
+            "pr_auc": 0.12078339575843275,
+            "valid_labels": 605,
+            "warnings": []
+          },
+          "NR-PPAR-gamma": {
+            "roc_auc": 0.6501513900357831,
+            "pr_auc": 0.08101622269834284,
+            "valid_labels": 540,
+            "warnings": []
+          },
+          "SR-ARE": {
+            "roc_auc": 0.6192897291773122,
+            "pr_auc": 0.3189262107493805,
+            "valid_labels": 483,
+            "warnings": []
+          },
+          "SR-ATAD5": {
+            "roc_auc": 0.7410714285714286,
+            "pr_auc": 0.0953426623031613,
+            "valid_labels": 628,
+            "warnings": []
+          },
+          "SR-HSE": {
+            "roc_auc": 0.4632573652028905,
+            "pr_auc": 0.057385433470844766,
+            "valid_labels": 549,
+            "warnings": []
+          },
+          "SR-MMP": {
+            "roc_auc": 0.6809256953092568,
+            "pr_auc": 0.40737384765574636,
+            "valid_labels": 497,
+            "warnings": []
+          },
+          "SR-p53": {
+            "roc_auc": 0.6018912529550827,
+            "pr_auc": 0.1512908944783385,
+            "valid_labels": 587,
+            "warnings": []
+          }
+        },
+        "warnings": []
+      }
+    }
+  }
+}
