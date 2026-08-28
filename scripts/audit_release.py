@@ -35,7 +35,11 @@ def publication_candidates() -> list[Path]:
 
 def _check_readme_links(errors: list[str]) -> int:
     readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
-    targets = re.findall(r"!?\[[^]]*\]\(([^)]+)\)", readme)
+    markdown_targets = re.findall(r"!?\[[^]]*\]\(([^)]+)\)", readme)
+    html_targets = re.findall(
+        r'<(?:a|img)\b[^>]*(?:href|src)="([^"]+)"', readme, flags=re.IGNORECASE
+    )
+    targets = markdown_targets + html_targets
     local_count = 0
     for raw_target in targets:
         target = raw_target.strip().strip("<>").split("#", 1)[0]

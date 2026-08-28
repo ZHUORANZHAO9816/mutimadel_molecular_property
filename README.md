@@ -25,7 +25,11 @@ numbers.
 
 ## Why graph-text alignment?
 
-![Figure 1: Motivation for aligning molecular graph and SMILES representations](docs/assets/paper_figure_1_alignment_motivation.jpg)
+<p align="center">
+  <img src="docs/assets/paper_figure_1_alignment_motivation.jpg"
+       alt="Figure 1: Motivation for aligning molecular graph and SMILES representations"
+       width="620">
+</p>
 
 The same molecule contains corresponding atom- and functional-group-level
 information in both its graph and SMILES forms, yet independently learned graph
@@ -40,7 +44,11 @@ which lets each modality condition on information from the other.
 
 ## Architecture from the paper
 
-![Figure 2: Overall architecture of GTpro](docs/assets/paper_figure_2_gtpro_architecture.jpg)
+<p align="center">
+  <img src="docs/assets/paper_figure_2_gtpro_architecture.jpg"
+       alt="Figure 2: Overall architecture of GTpro"
+       width="760">
+</p>
 
 *Figure 2 from Zhao et al. (2024): (A) graph and SMILES encoders with
 contrastive alignment and cross-attention; (B) the Transformer encoder block;
@@ -59,7 +67,11 @@ multi-granularity pretraining plus contrastive learning on five classification
 benchmarks. The final configuration is consistently strongest in the plotted
 paper results.
 
-![Figure 3: Paper-reported pretraining and contrastive-learning ablation](docs/assets/paper_figure_3_pretraining_ablation.jpg)
+<p align="center">
+  <img src="docs/assets/paper_figure_3_pretraining_ablation.jpg"
+       alt="Figure 3: Paper-reported pretraining and contrastive-learning ablation"
+       width="680">
+</p>
 
 *Figure 3 reports the paper's ROC-AUC results for BBBP, BACE, Sider, ClinTox,
 and Tox21. These values belong to the published experiment and must not be
@@ -76,7 +88,11 @@ while the cross-modal attention matrix exposes interactions between graph atoms
 and SMILES tokens. This visualization supports the alignment interpretation;
 it is explanatory evidence rather than a standalone quantitative benchmark.
 
-![Figure 6: Atom/token attention before and after contrastive alignment](docs/assets/paper_figure_6_attention_analysis.jpg)
+<p align="center">
+  <img src="docs/assets/paper_figure_6_attention_analysis.jpg"
+       alt="Figure 6: Atom/token attention before and after contrastive alignment"
+       width="820">
+</p>
 
 *Figure 6 from Zhao et al. (2024), showing the paper's example without and with
 the contrastive objective and its graph-text attention matrix. © 2024 Elsevier
