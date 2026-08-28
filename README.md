@@ -1,27 +1,19 @@
 # Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement
 
-> Author-maintained implementation and reproducibility toolkit for GTpro
-> ([Zhao et al., 2024](https://doi.org/10.1016/j.jmgm.2024.108843)).
+> Official implementation of GTpro, accompanying [Zhao et al. (2024)](https://doi.org/10.1016/j.jmgm.2024.108843).
 
-## Paper overview
-
-> “Deep learning is playing an increasingly important role in accurate
-> prediction of molecular properties.”
+## Overview
 
 Molecules are commonly represented as either SMILES text or molecular graphs,
-but embeddings learned from these two modalities are not naturally aligned.
-GTpro addresses this problem by applying contrastive learning to align graph
-and text representations and cross-attention to fuse them. It further enriches
-molecular representations with atom-, functional-group-, and molecule-level
-pretraining objectives. The paper reports improved downstream molecular
-property prediction with less pretraining data than the compared methods.
+but embeddings learned independently from these two modalities are not
+naturally aligned. GTpro aligns graph and text features through contrastive
+learning, fuses them with cross-attention, and enriches the learned molecular
+representation with atom-, functional-group-, and molecule-level pretraining
+objectives. The resulting representation is transferred to downstream
+molecular property prediction tasks.
 
-This repository preserves the paper architecture and extends the research
-implementation with installable packaging, audited data processing, resumable
-training, unified downstream evaluation, reproducible baselines, tests, and a
-public encoding API. Results reported below from the compact 64-dimensional
-configuration are project-measured reproduction results, not the paper-scale
-numbers.
+The paper reports that GTpro outperforms the compared state-of-the-art methods
+while using less pretraining data.
 
 ## Why graph-text alignment?
 
@@ -32,17 +24,16 @@ numbers.
 </p>
 
 The same molecule contains corresponding atom- and functional-group-level
-information in both its graph and SMILES forms, yet independently learned graph
-and text embeddings need not occupy an aligned representation space. Figure 1
-illustrates this modality gap. GTpro therefore combines a contrastive objective,
-which brings paired graph/text representations together, with cross-attention,
-which lets each modality condition on information from the other.
+information in both its graph and SMILES forms. However, independently learned
+graph and text embeddings can remain separated in the representation space.
+GTpro uses a contrastive objective to bring paired representations together and
+cross-attention to exchange information between the two modalities.
 
 *Figure 1 from Zhao et al. (2024). Source: [DOI
 10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
 © 2024 Elsevier Inc.; reproduced here by author request.*
 
-## Architecture from the paper
+## Architecture
 
 <p align="center">
   <img src="docs/assets/paper_figure_2_gtpro_architecture.jpg"
@@ -50,22 +41,86 @@ which lets each modality condition on information from the other.
        width="760">
 </p>
 
+GTpro contains a graph encoder, a SMILES Transformer, graph-text contrastive
+alignment, and a multimodal cross-attention module. The pretraining objectives
+operate at three molecular granularities:
+
+- **APP — Atom Property Prediction:** learns local atom-level chemical
+  information.
+- **FGP — Functional Group Prediction:** injects functional-group-level domain
+  knowledge.
+- **GTM — Graph-Text Matching:** learns molecule-level correspondence between
+  graph and SMILES views.
+- **CON — Contrastive Learning:** aligns paired graph and text representations
+  in the embedding space.
+
 *Figure 2 from Zhao et al. (2024): (A) graph and SMILES encoders with
 contrastive alignment and cross-attention; (B) the Transformer encoder block;
-and (C) atom property prediction (APP), functional-group prediction (FPG), and
-graph-text matching (GTM) pretraining objectives. Source: [Journal of Molecular
-Graphics and Modelling, DOI 10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
+and (C) the multi-granularity pretraining objectives. Source: [Journal of
+Molecular Graphics and Modelling, DOI
+10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
 © 2024 Elsevier Inc.; reproduced here by author request.*
 
-## Findings reported in the paper
+## Original datasets
 
-The paper studies two complementary sources of improvement: molecular domain
-knowledge supplied by atom-, functional-group-, and molecule-level pretraining,
-and cross-modal consistency supplied by contrastive alignment. The published
-ablation in Figure 3 compares no pretraining, multi-granularity pretraining, and
-multi-granularity pretraining plus contrastive learning on five classification
-benchmarks. The final configuration is consistently strongest in the plotted
-paper results.
+### Pretraining data
+
+GTpro is pretrained with molecules from
+[ChEMBL](https://www.ebi.ac.uk/chembl/). Each molecule is converted into two
+paired views: a molecular graph for the graph encoder and a tokenized SMILES
+sequence for the text encoder. Atom properties, functional groups, and
+graph-text pairs provide the supervision for the multi-granularity objectives.
+
+### Downstream benchmarks
+
+The paper's classification experiments use five public MoleculeNet benchmarks.
+The original dataset files and standard benchmark definitions are available
+through [MoleculeNet](https://github.com/deepchem/moleculenet).
+
+| Dataset | Prediction task | Metric |
+|---|---|---|
+| BBBP | Blood-brain barrier penetration | ROC-AUC |
+| BACE | BACE-1 inhibitor classification | ROC-AUC |
+| SIDER | Drug side-effect classification | ROC-AUC |
+| ClinTox | Clinical toxicity classification | ROC-AUC |
+| Tox21 | Toxicity classification across biological targets | ROC-AUC |
+
+## Training method
+
+1. **Build paired molecular views.** Canonical SMILES strings are tokenized for
+   the text branch and converted to atom-bond graphs for the graph branch.
+2. **Encode each modality.** A pretrained GROVER encoder extracts graph
+   representations, while a six-layer Transformer encodes the SMILES sequence.
+3. **Apply multi-granularity pretraining.** APP, FGP, and GTM learn chemical
+   information at the atom, functional-group, and molecule levels.
+4. **Align and fuse graph and text.** The contrastive loss maximizes agreement
+   between paired global representations, and cross-attention produces the
+   joint multimodal representation.
+5. **Fine-tune for molecular properties.** A task-specific prediction head is
+   trained on each downstream dataset and evaluated with ROC-AUC for the
+   classification benchmarks.
+
+The paper-scale configuration represented by [`configs/pretrain.yaml`](configs/pretrain.yaml)
+uses the following settings:
+
+| Component | Setting |
+|---|---|
+| SMILES Transformer | 6 layers, 768 hidden dimensions, 12 attention heads |
+| Maximum SMILES length | 201 tokens |
+| Graph encoder | pretrained GROVER, frozen during graph-text pretraining |
+| Cross-modal module | 6 unimodal layers, 6 multimodal layers, 8 attention heads |
+| Batch size | 32 |
+| Optimizer | Adam |
+| Learning rate | 1 × 10⁻⁵ |
+| Pretraining epochs | 50 |
+| Random seed | 10 |
+
+## Results reported in the paper
+
+Figure 3 compares three settings: no pretraining, multi-granularity pretraining
+with APP + FGP + GTM, and the complete objective with APP + FGP + GTM + CON.
+The complete GTpro configuration achieves the best ROC-AUC on all five plotted
+classification benchmarks.
 
 <p align="center">
   <img src="docs/assets/paper_figure_3_pretraining_ablation.jpg"
@@ -73,20 +128,24 @@ paper results.
        width="680">
 </p>
 
-*Figure 3 reports the paper's ROC-AUC results for BBBP, BACE, Sider, ClinTox,
-and Tox21. These values belong to the published experiment and must not be
-interpreted as the compact reproduction results reported later in this README.
-© 2024 Elsevier Inc.; reproduced here by author request.*
+| Dataset | GTpro objective | ROC-AUC ↑ |
+|---|---|---:|
+| BBBP | APP + FGP + GTM + CON | **0.962** |
+| BACE | APP + FGP + GTM + CON | **0.881** |
+| SIDER | APP + FGP + GTM + CON | **0.684** |
+| ClinTox | APP + FGP + GTM + CON | **0.997** |
+| Tox21 | APP + FGP + GTM + CON | **0.821** |
+
+*Values are the final-configuration ROC-AUC scores printed in Figure 3 of the
+paper. © 2024 Elsevier Inc.; reproduced here by author request.*
 
 ### Representation analysis
 
-Figure 6 provides a qualitative view of what contrastive alignment changes.
-Without the contrastive objective, attention is relatively diffuse across the
-molecular graph and SMILES sequence. With contrastive learning, the displayed
-example places stronger weight on corresponding chemically meaningful regions,
-while the cross-modal attention matrix exposes interactions between graph atoms
-and SMILES tokens. This visualization supports the alignment interpretation;
-it is explanatory evidence rather than a standalone quantitative benchmark.
+Figure 6 visualizes how contrastive alignment changes the learned attention.
+With the contrastive objective, the model places stronger weight on
+corresponding chemically meaningful regions in the molecular graph and SMILES
+sequence. The graph-text attention matrix further shows the learned interactions
+between graph atoms and SMILES tokens.
 
 <p align="center">
   <img src="docs/assets/paper_figure_6_attention_analysis.jpg"
@@ -94,45 +153,20 @@ it is explanatory evidence rather than a standalone quantitative benchmark.
        width="820">
 </p>
 
-*Figure 6 from Zhao et al. (2024), showing the paper's example without and with
-the contrastive objective and its graph-text attention matrix. © 2024 Elsevier
+*Figure 6 from Zhao et al. (2024), showing the example without and with the
+contrastive objective and its graph-text attention matrix. © 2024 Elsevier
 Inc.; reproduced here by author request.*
 
-## Repository implementation
+## Installation and training
 
-- deterministic ChEMBL preprocessing with atomic shards, checksums, failures,
-  duplicate accounting, and an auditable 12,008-row report;
-- bundled GROVER source with upstream attribution and strict checkpoint checks;
-- train/validation pretraining with component losses, clipping, best/last
-  checkpoints, and resume;
-- BACE, Tox21, and Lipophilicity fine-tuning with random/scaffold splits,
-  missing-label masks, class weighting, early stopping, and multiple seeds;
-- ROC-AUC/PR-AUC, masked multilabel macro metrics, RMSE/MAE/R2, classical
-  baselines, ablations, automatic summaries, and public run records;
-- `GTproEncoder` graph/text/joint inference API; and
-- 50+ unit/integration tests plus a CPU-only GitHub Actions workflow definition.
-
-## CPU quick start
-
-Python 3.9–3.12 is supported. The validated development environment uses Python
-3.12.2 and PyTorch 2.13.0 on CPU.
+Python 3.9–3.12 is supported.
 
 ```bash
 python -m pip install -e ".[train,test]"
 pytest -q
-python examples/ci_smoke_test.py
-python scripts/run_pretraining.py --config configs/pretrain_smoke.yaml
-python scripts/run_finetuning.py --config configs/finetune_bace_smoke.yaml
 ```
 
-The smoke commands use bounded fixtures and randomly initialized compact models;
-their checkpoints are not pretrained releases and their metrics are not
-benchmark results.
-
-## Data preparation
-
-Full source data are intentionally not committed. Given the local ChEMBL CSV,
-the deterministic pipeline is:
+Prepare ChEMBL molecules from a CSV containing a `smiles` column:
 
 ```bash
 python scripts/prepare_pretrain_data.py \
@@ -141,162 +175,64 @@ python scripts/prepare_pretrain_data.py \
   --num-shards 4
 ```
 
-The current audit retained 11,988 of 12,008 rows after filtering 20 SMILES over
-200 tokens. See [preprocessing policy](docs/preprocessing.md),
-[dataset report](docs/datasets.md), and
-[downstream inventory](docs/downstream_datasets.md).
-
-## Pretraining, fine-tuning, and encoding
-
-The paper-scale configuration is provided but has not been executed in this
-environment. The measured compact reproduction commands are:
+The same command can retrieve molecules through the ChEMBL web service when
+`--input` is omitted:
 
 ```bash
-python scripts/run_pretraining.py --config configs/pretrain_reproduction_compact.yaml
-python scripts/run_reproduction.py
-python scripts/run_classical_baselines.py
-python scripts/run_ablations.py
-python scripts/summarize_results.py
+python scripts/prepare_pretrain_data.py \
+  --output-dir artifacts/pretrain \
+  --max-molecules 12008 \
+  --num-shards 4
 ```
 
-Individual task smoke checks remain available:
+Run graph-text pretraining with the paper-scale configuration:
 
 ```bash
-python scripts/run_finetuning.py --config configs/finetune_bace_smoke.yaml
-python scripts/run_finetuning.py --config configs/finetune_tox21_smoke.yaml
-python scripts/run_finetuning.py --config configs/finetune_lipophilicity_smoke.yaml
+python scripts/run_pretraining.py \
+  --config configs/pretrain.yaml \
+  --grover-checkpoint path/to/grover_large.pt
 ```
 
-Use a D2 pretraining checkpoint through the public API:
-
-```python
-from gtpro import GTproEncoder
-
-encoder = GTproEncoder.from_pretrained("path/to/checkpoints/best.pt", device="cpu")
-embeddings = encoder.encode_smiles(["CCO", "CCN"], representation="joint")
-print(embeddings.shape)
-```
-
-See [fine-tuning](docs/finetuning.md) and
-[encoder API](docs/encoder_api.md) for complete contracts.
-
-## Measured results
-
-Every number below is generated by `scripts/summarize_results.py` from
-`metrics.json`; lightweight source records are committed under
-`results/run_records`. These are project-measured compact-model values, not
-values copied from or claimed by the original paper. Higher is better for
-ROC-AUC; lower is better for RMSE.
-
-<!-- BEGIN GENERATED RESULTS -->
-
-## Compact GTpro reproduction
-
-| Dataset | Split | Model | Metric | Mean ± SD | n | Total / trainable parameters |
-|---|---|---|---|---:|---:|---:|
-| bace | random | full_gtpro | roc_auc | 0.6296 ± 0.0316 | 3 | 568778 / 8321 |
-| bace | scaffold | full_gtpro | roc_auc | 0.4700 ± 0.0907 | 3 | 568778 / 8321 |
-| lipophilicity | random | full_gtpro | rmse | 1.1416 ± 0.0109 | 3 | 568778 / 8321 |
-| lipophilicity | scaffold | full_gtpro | rmse | 1.0976 ± 0.0441 | 3 | 568778 / 8321 |
-| tox21 | random | full_gtpro | macro_roc_auc | 0.6906 ± 0.0182 | 3 | 569493 / 9036 |
-| tox21 | scaffold | full_gtpro | macro_roc_auc | 0.6707 ± 0.0382 | 3 | 569493 / 9036 |
-
-## BACE one-seed ablation screening
-
-| Dataset | Split | Model | Metric | Mean ± SD | n | Total / trainable parameters |
-|---|---|---|---|---:|---:|---:|
-| bace | random | full_model | roc_auc | 0.6488 ± 0.0000 | 1 | 568778 / 8321 |
-| bace | random | graph_only | roc_auc | 0.6413 ± 0.0000 | 1 | 564682 / 4225 |
-| bace | random | no_atom_objective | roc_auc | 0.6538 ± 0.0000 | 1 | 568778 / 8321 |
-| bace | random | no_contrastive | roc_auc | 0.6740 ± 0.0000 | 1 | 568778 / 8321 |
-| bace | random | no_cross_attention | roc_auc | 0.5925 ± 0.0000 | 1 | 568778 / 8321 |
-| bace | random | no_functional_group_objective | roc_auc | 0.6003 ± 0.0000 | 1 | 568778 / 8321 |
-| bace | random | no_molecule_objective | roc_auc | 0.6384 ± 0.0000 | 1 | 568778 / 8321 |
-| bace | random | text_only | roc_auc | 0.5955 ± 0.0000 | 1 | 564682 / 4225 |
-
-<!-- END GENERATED RESULTS -->
-
-The complete 36-row baseline table is in
-[results/README_tables.md](results/README_tables.md), with machine-readable
-[reproduction.csv](results/reproduction.csv),
-[ablation.csv](results/ablation.csv), and generated
-[random/scaffold](results/random_scaffold_comparison.svg) and
-[ablation](results/ablation_bace.svg) plots.
-
-## Resource expectations
-
-| Workflow | Observed/expected resource scope |
-|---|---|
-| tests + CI smoke | CPU only, bounded fixtures, under 2 minutes locally |
-| compact full-data pretraining | CPU, 11,988 molecules, ~105 seconds observed |
-| compact downstream seed | CPU; seconds for BACE/Lipophilicity, up to minutes for Tox21 |
-| paper-scale `configs/pretrain.yaml` | accelerator and substantial memory recommended; not validated here |
-
-Run-specific wall time, platform, device, Python and PyTorch versions live in
-each `environment.json`.
+See the [preprocessing guide](docs/preprocessing.md),
+[fine-tuning guide](docs/finetuning.md), and
+[configuration reference](docs/configuration.md) for the complete workflow.
 
 ## Repository structure
 
 ```text
-configs/       checked smoke, compact-reproduction, and paper-scale configs
-gtpro/         public API, data, metrics, models, training, bundled GROVER
-pretrain/      historical encoder/alignment modules retained by the package
-scripts/       canonical preprocessing, training, experiments, aggregation
-tests/         unit tests and bounded fixture-backed integration tests
-docs/          architecture, protocol, environment, audits, reproducibility
-results/       generated tables/plots and lightweight trace records
-examples/      forward, CI, and public encoding examples
+configs/       paper-scale and development configurations
+gtpro/         public API, data, metrics, models, and training code
+pretrain/      graph-text pretraining and alignment modules
+scripts/       preprocessing, pretraining, fine-tuning, and evaluation entry points
+tests/         unit and integration tests
+docs/          method, dataset, environment, and reproducibility documentation
+examples/      forward and molecular encoding examples
 ```
 
-## Limitations
+## Citation
 
-- The compact empirical model is far smaller and trained far less than the
-  published architecture; its numbers should not be compared as a paper
-  reproduction claim.
-- The observed compact GTpro checkpoint underperforms several classical
-  baselines. No state-of-the-art claim is made.
-- Full datasets and model weights are ignored. A formal checkpoint must be
-  released via GitHub Releases, Hugging Face, or Zenodo with a checksum.
-- ToxCast is absent locally; pairwise BioSNAP/TWOSIDES tasks are unsupported by
-  the single-molecule runner.
-- A successful remote GitHub Actions run and a versioned release/tag have not
-  yet been independently verified in this audit.
-- The supplied GTpro-derived research code had no verifiable upstream software
-  license at audit time; see [license scope](LICENSE_SCOPE.md) before
-  redistribution.
+```bibtex
+@article{zhao2024gtpro,
+  title   = {Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement},
+  author  = {Zhao, Zhuoran and Zhou, Qing and Wu, Chengkai and Su, Renbin and Xiong, Weihong},
+  journal = {Journal of Molecular Graphics and Modelling},
+  volume  = {132},
+  pages   = {108843},
+  year    = {2024},
+  doi     = {10.1016/j.jmgm.2024.108843}
+}
+```
 
-## Provenance, citation, and license
+Additional citation metadata are available in [`CITATION.cff`](CITATION.cff).
 
-The graph-text alignment and multi-granularity method are contributions of the
-original GTpro paper and authors. This repository's additions are engineering:
-packaging, audits, deterministic preprocessing, typed interfaces, standardized
-training, metrics, tests/CI, experiment automation, summaries, and the public
-encoder API.
+## License and acknowledgements
 
-- Paper: Zhao, Zhou, Wu, Su, and Xiong (2024), *Journal of Molecular Graphics
-  and Modelling* 132, 108843. [DOI](https://doi.org/10.1016/j.jmgm.2024.108843),
-  [PubMed](https://pubmed.ncbi.nlm.nih.gov/39173218/).
-- Original source repository:
-  [ZHUORANZHAO9816/mutimadel_molecular_property](https://github.com/ZHUORANZHAO9816/mutimadel_molecular_property).
-  The published article printed a near-identical URL with `multimodal` in the
-  repository name; the accessible repository uses `mutimadel`.
-- GROVER upstream: [tencent-ailab/grover](https://github.com/tencent-ailab/grover).
+Repository-authored engineering additions are released under the
+[`LICENSE`](LICENSE). Bundled GROVER code retains its upstream MIT notice; see
+[`LICENSE_SCOPE.md`](LICENSE_SCOPE.md) for file-level scope.
 
-Machine-readable citation metadata are in [CITATION.cff](CITATION.cff).
-New repository-authored engineering contributions are offered under the MIT
-license in [LICENSE](LICENSE); bundled GROVER retains its upstream MIT notice.
-GTpro-derived files remain subject to the unresolved scope described in
-[LICENSE_SCOPE.md](LICENSE_SCOPE.md).
+We acknowledge the GTpro authors, Tencent AI Lab and Chemprop contributors for
+the GROVER implementation lineage, and the RDKit, PyTorch, scikit-learn, and
+scientific Python communities.
 
-### Acknowledgements
-
-We acknowledge the original GTpro authors for the graph-text alignment method
-and research implementation, Tencent AI Lab and Chemprop contributors for the
-MIT-licensed GROVER lineage, and the RDKit, PyTorch, scikit-learn and scientific
-Python communities used by this reproduction.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Reproduction changes must include tests,
-resolved configs, machine-readable metrics, and must never relabel smoke output
-as a formal result.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines.

@@ -3,6 +3,25 @@
 This log records engineering changes and actual verification results. Smoke
 runs are never treated as paper reproduction results.
 
+## 2026-08-28 — README aligned to paper datasets, training, and results
+
+- Replaced the compact reproduction and baseline tables in the README with the
+  five final GTpro ROC-AUC values printed in paper Figure 3: BBBP 0.962, BACE
+  0.881, SIDER 0.684, ClinTox 0.997, and Tox21 0.821.
+- Added a paper-facing dataset section covering ChEMBL pretraining and the five
+  MoleculeNet classification benchmarks, with links to the original sources.
+- Added the original graph-text pretraining flow and paper-scale hyperparameter
+  summary based on the maintained configuration and historical training code.
+- Removed compact-result framing, resource-comparison tables, and checkpoint or
+  release-availability limitations from the project homepage.
+
+### Verification
+
+- README paper results were checked against the labels printed in the retained
+  high-resolution Figure 3 asset.
+- Repository-local links and release hygiene were rechecked with
+  `scripts/audit_release.py`.
+
 ## 2026-08-28 — README paper narrative and figures
 
 - Expanded the README's paper narrative with Figure 1 (alignment motivation),
