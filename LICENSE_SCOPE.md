@@ -22,8 +22,8 @@ MIT-licensed.
 Scientific datasets and trained weights have separate source/use terms and are
 not granted rights by the software license.
 
-`docs/assets/paper_figure_2_gtpro_architecture.jpg` is Figure 2 from the
-published GTpro paper, © 2024 Elsevier Inc. It is reproduced in this
-author-maintained repository by author request and is not covered by the root
+The `docs/assets/paper_figure_*.jpg` files are Figures 1, 2, 3, and 6 from the
+published GTpro paper, © 2024 Elsevier Inc. They are reproduced in this
+author-maintained repository by author request and are not covered by the root
 MIT license. The project-authored `docs/assets/architecture.svg` remains within
 the repository-authored engineering scope.

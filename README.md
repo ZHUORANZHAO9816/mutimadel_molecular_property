@@ -23,6 +23,21 @@ public encoding API. Results reported below from the compact 64-dimensional
 configuration are project-measured reproduction results, not the paper-scale
 numbers.
 
+## Why graph-text alignment?
+
+![Figure 1: Motivation for aligning molecular graph and SMILES representations](docs/assets/paper_figure_1_alignment_motivation.jpg)
+
+The same molecule contains corresponding atom- and functional-group-level
+information in both its graph and SMILES forms, yet independently learned graph
+and text embeddings need not occupy an aligned representation space. Figure 1
+illustrates this modality gap. GTpro therefore combines a contrastive objective,
+which brings paired graph/text representations together, with cross-attention,
+which lets each modality condition on information from the other.
+
+*Figure 1 from Zhao et al. (2024). Source: [DOI
+10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
+© 2024 Elsevier Inc.; reproduced here by author request.*
+
 ## Architecture from the paper
 
 ![Figure 2: Overall architecture of GTpro](docs/assets/paper_figure_2_gtpro_architecture.jpg)
@@ -33,6 +48,39 @@ and (C) atom property prediction (APP), functional-group prediction (FPG), and
 graph-text matching (GTM) pretraining objectives. Source: [Journal of Molecular
 Graphics and Modelling, DOI 10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
 © 2024 Elsevier Inc.; reproduced here by author request.*
+
+## Findings reported in the paper
+
+The paper studies two complementary sources of improvement: molecular domain
+knowledge supplied by atom-, functional-group-, and molecule-level pretraining,
+and cross-modal consistency supplied by contrastive alignment. The published
+ablation in Figure 3 compares no pretraining, multi-granularity pretraining, and
+multi-granularity pretraining plus contrastive learning on five classification
+benchmarks. The final configuration is consistently strongest in the plotted
+paper results.
+
+![Figure 3: Paper-reported pretraining and contrastive-learning ablation](docs/assets/paper_figure_3_pretraining_ablation.jpg)
+
+*Figure 3 reports the paper's ROC-AUC results for BBBP, BACE, Sider, ClinTox,
+and Tox21. These values belong to the published experiment and must not be
+interpreted as the compact reproduction results reported later in this README.
+© 2024 Elsevier Inc.; reproduced here by author request.*
+
+### Representation analysis
+
+Figure 6 provides a qualitative view of what contrastive alignment changes.
+Without the contrastive objective, attention is relatively diffuse across the
+molecular graph and SMILES sequence. With contrastive learning, the displayed
+example places stronger weight on corresponding chemically meaningful regions,
+while the cross-modal attention matrix exposes interactions between graph atoms
+and SMILES tokens. This visualization supports the alignment interpretation;
+it is explanatory evidence rather than a standalone quantitative benchmark.
+
+![Figure 6: Atom/token attention before and after contrastive alignment](docs/assets/paper_figure_6_attention_analysis.jpg)
+
+*Figure 6 from Zhao et al. (2024), showing the paper's example without and with
+the contrastive objective and its graph-text attention matrix. © 2024 Elsevier
+Inc.; reproduced here by author request.*
 
 ## Repository implementation
 
@@ -195,8 +243,8 @@ examples/      forward, CI, and public encoding examples
   released via GitHub Releases, Hugging Face, or Zenodo with a checksum.
 - ToxCast is absent locally; pairwise BioSNAP/TWOSIDES tasks are unsupported by
   the single-molecule runner.
-- A remote GitHub Actions run and published release/tag do not yet exist in this
-  uncommitted local repository.
+- A successful remote GitHub Actions run and a versioned release/tag have not
+  yet been independently verified in this audit.
 - The supplied GTpro-derived research code had no verifiable upstream software
   license at audit time; see [license scope](LICENSE_SCOPE.md) before
   redistribution.

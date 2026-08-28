@@ -3,6 +3,20 @@
 This log records engineering changes and actual verification results. Smoke
 runs are never treated as paper reproduction results.
 
+## 2026-08-28 — README paper narrative and figures
+
+- Expanded the README's paper narrative with Figure 1 (alignment motivation),
+  Figure 3 (published pretraining/contrastive ablation), and Figure 6
+  (atom/token attention analysis), in addition to the existing Figure 2
+  architecture overview.
+- Kept redundant Figure 4 and the training-loss-only Figure 5 out of the README
+  to preserve a focused project homepage.
+- Clearly separated publisher-reported paper results from the compact local
+  reproduction tables, and added cautious interpretation rather than implying
+  that an attention visualization is standalone quantitative evidence.
+- Added per-file provenance, resolution, copyright, and license-scope metadata
+  for all paper figures.
+
 ## 2026-08-27 — Paper architecture alignment
 
 - Reframed README as the author-maintained GTpro paper implementation while

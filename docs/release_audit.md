@@ -1,13 +1,13 @@
 # Public release audit
 
-Audit date: 2026-08-27. This report covers the local publication candidates and
+Audit date: 2026-08-28. This report covers the local publication candidates and
 the merged original repository history. No versioned GitHub Release has been
 published.
 
 ## Local candidate audit
 
-`python scripts/audit_release.py` passed with 476 publication candidates, 474
-UTF-8 text files, 116 result trace records, and 16 valid README-local links.
+`python scripts/audit_release.py` passed with 482 publication candidates, 476
+UTF-8 text files, 116 result trace records, and 19 valid README-local links.
 No candidate exceeded 50 MiB or matched the prohibited checkpoint/cache/log
 classes. The scan found no private-key header, AWS access-key pattern, or
 personal macOS/Linux absolute path. The ignored local full datasets, run
@@ -17,9 +17,8 @@ Each copied result `metrics.json` has sibling `config.yaml` and
 `environment.json`. `scripts/summarize_results.py` replaces the machine's
 repository prefix with `${PROJECT_ROOT}` while copying these records, preserving
 traceability without publishing a workstation path. README uses the paper's
-high-resolution Figure 2 at
-`docs/assets/paper_figure_2_gtpro_architecture.jpg`, with DOI, figure number,
-publisher copyright, and author-request attribution. The supplementary
+high-resolution Figures 1, 2, 3, and 6 under `docs/assets/`, with DOI, figure
+numbers, publisher copyright, and author-request attribution. The supplementary
 `docs/assets/architecture.svg` is an original project-authored vector diagram.
 
 ## Git history and links
