@@ -5,6 +5,12 @@ runs are never treated as paper reproduction results.
 
 ## 2026-08-28 — README aligned to paper datasets, training, and results
 
+- Removed the unexplained `GTpro` model name from the public paper narrative
+  and consistently refers to the paper's proposed method/model instead.
+- Added `examples/end_to_end_quickstart.py`, a one-command CPU workflow using
+  committed example data. It performs graph-text pretraining, transfers the
+  same encoders into a downstream predictor, fine-tunes its head, and evaluates
+  a deterministic binary test split.
 - Refined the homepage presentation after reviewing the official MolCLR,
   GraphMVP, GROVER, and Uni-Mol repositories. Added prominent authorship and
   venue metadata, compact paper links, contribution highlights, benchmark task

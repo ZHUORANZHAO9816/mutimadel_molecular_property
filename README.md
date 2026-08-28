@@ -7,22 +7,22 @@
 [[PubMed](https://pubmed.ncbi.nlm.nih.gov/39173218/)]
 [[Citation](#citation)]
 
-> Official implementation of **GTpro**, a graph-text molecular representation
-> framework with cross-modal alignment and chemistry-aware, multi-granularity
-> pretraining.
+> Official implementation of the graph-text molecular representation method
+> proposed in the paper, with cross-modal alignment and chemistry-aware,
+> multi-granularity pretraining.
 
 ## Overview
 
 Molecules are commonly represented as either SMILES text or molecular graphs,
 but embeddings learned independently from these two modalities are not
-naturally aligned. GTpro aligns graph and text features through contrastive
-learning, fuses them with cross-attention, and enriches the learned molecular
-representation with atom-, functional-group-, and molecule-level pretraining
-objectives. The resulting representation is transferred to downstream
-molecular property prediction tasks.
+naturally aligned. The proposed method aligns graph and text features through
+contrastive learning, fuses them with cross-attention, and enriches the learned
+molecular representation with atom-, functional-group-, and molecule-level
+pretraining objectives. The resulting representation is transferred to
+downstream molecular property prediction tasks.
 
-The paper reports that GTpro outperforms the compared state-of-the-art methods
-while using less pretraining data.
+The paper reports improved performance over the compared state-of-the-art
+methods while using less pretraining data.
 
 ### Highlights
 
@@ -36,6 +36,34 @@ while using less pretraining data.
 - **Consistent downstream gains.** The complete pretraining objective performs
   best across all five classification benchmarks in the paper's ablation.
 
+## Quick start
+
+The following CPU-only example runs the complete workflow on the small dataset
+included in this repository:
+
+1. construct paired molecular graph and SMILES inputs;
+2. perform one graph-text pretraining epoch;
+3. transfer the pretrained encoders to a binary property predictor;
+4. fine-tune the prediction head and evaluate the test split.
+
+```bash
+python -m pip install -e ".[train]"
+python examples/end_to_end_quickstart.py
+```
+
+A successful run ends with output similar to:
+
+```text
+End-to-end quick start completed on CPU
+  pretraining molecules: 8
+  train/valid/test:      5/2/2
+  example test ROC-AUC:  1.0000
+```
+
+This bounded example verifies that preprocessing, pretraining, representation
+transfer, fine-tuning, and evaluation work together. The paper experiments use
+the full datasets and settings described below.
+
 ## Why graph-text alignment?
 
 <p align="center">
@@ -47,8 +75,9 @@ while using less pretraining data.
 The same molecule contains corresponding atom- and functional-group-level
 information in both its graph and SMILES forms. However, independently learned
 graph and text embeddings can remain separated in the representation space.
-GTpro uses a contrastive objective to bring paired representations together and
-cross-attention to exchange information between the two modalities.
+The method uses a contrastive objective to bring paired representations
+together and cross-attention to exchange information between the two
+modalities.
 
 *Figure 1 from Zhao et al. (2024). Source: [DOI
 10.1016/j.jmgm.2024.108843](https://doi.org/10.1016/j.jmgm.2024.108843).
@@ -58,13 +87,13 @@ cross-attention to exchange information between the two modalities.
 
 <p align="center">
   <img src="docs/assets/paper_figure_2_gtpro_architecture.jpg"
-       alt="Figure 2: Overall architecture of GTpro"
+       alt="Figure 2: Overall architecture of the proposed method"
        width="760">
 </p>
 
-GTpro contains a graph encoder, a SMILES Transformer, graph-text contrastive
-alignment, and a multimodal cross-attention module. The pretraining objectives
-operate at three molecular granularities:
+The architecture contains a graph encoder, a SMILES Transformer, graph-text
+contrastive alignment, and a multimodal cross-attention module. The pretraining
+objectives operate at three molecular granularities:
 
 - **APP — Atom Property Prediction:** learns local atom-level chemical
   information.
@@ -86,7 +115,7 @@ Molecular Graphics and Modelling, DOI
 
 ### Pretraining data
 
-GTpro is pretrained with molecules from
+The model is pretrained with molecules from
 [ChEMBL](https://www.ebi.ac.uk/chembl/). Each molecule is converted into two
 paired views: a molecular graph for the graph encoder and a tokenized SMILES
 sequence for the text encoder. Atom properties, functional groups, and
@@ -167,7 +196,7 @@ alignment.
        width="680">
 </p>
 
-| Benchmark | Tasks | Full GTpro objective | Paper-reported ROC–AUC ↑ |
+| Benchmark | Tasks | Complete objective | Paper-reported ROC–AUC ↑ |
 |---|---:|---|---:|
 | BBBP | 1 | APP + FGP + GTM + CON | **0.962** |
 | BACE | 1 | APP + FGP + GTM + CON | **0.881** |
@@ -183,7 +212,7 @@ paper. © 2024 Elsevier Inc.; reproduced here by author request.*
 - **The complete objective is consistently strongest.** Adding contrastive
   graph-text alignment to APP + FGP + GTM improves the result on every plotted
   benchmark, rather than benefiting only one property family.
-- **GTpro is particularly strong on BBBP and ClinTox.** The full model reaches
+- **The model is particularly strong on BBBP and ClinTox.** The full model reaches
   0.962 and 0.997 ROC–AUC, respectively, while also attaining 0.881 on BACE and
   0.821 on Tox21.
 - **The result spans different levels of task complexity.** The same framework
@@ -213,7 +242,7 @@ between graph atoms and SMILES tokens.
 contrastive objective and its graph-text attention matrix. © 2024 Elsevier
 Inc.; reproduced here by author request.*
 
-## Installation and training
+## Full-data training
 
 Python 3.9–3.12 is supported.
 
@@ -268,7 +297,7 @@ examples/      forward and molecular encoding examples
 ## Citation
 
 ```bibtex
-@article{zhao2024gtpro,
+@article{zhao2024graphtext,
   title   = {Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement},
   author  = {Zhao, Zhuoran and Zhou, Qing and Wu, Chengkai and Su, Renbin and Xiong, Weihong},
   journal = {Journal of Molecular Graphics and Modelling},
@@ -287,8 +316,8 @@ Repository-authored engineering additions are released under the
 [`LICENSE`](LICENSE). Bundled GROVER code retains its upstream MIT notice; see
 [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md) for file-level scope.
 
-We acknowledge the GTpro authors, Tencent AI Lab and Chemprop contributors for
-the GROVER implementation lineage, and the RDKit, PyTorch, scikit-learn, and
-scientific Python communities.
+We acknowledge Tencent AI Lab and Chemprop contributors for the GROVER
+implementation lineage, and the RDKit, PyTorch, scikit-learn, and scientific
+Python communities.
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines.
