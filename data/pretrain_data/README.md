@@ -1,7 +1,8 @@
-# GTpro smoke pretraining fixtures
+# Pretraining data
 
-This directory may contain local full pretraining data, but Git tracks only the
-small files whose names begin with `gtpro_smoke_` and this README.
+`CHEMBL_smiles.csv` contains 12,008 unique SMILES retrieved from the ChEMBL Data
+Web Services. Its source, selection rule, license, row count, and SHA-256 hash
+are recorded in `data/DATA_LICENSES.md` and `data/paper_datasets.json`.
 
 `gtpro_smoke_1.npy` and `gtpro_smoke_2.npy` are test-only fixtures. Each shard
 contains 16 molecules (32 in total) in the legacy five-array format:
@@ -17,5 +18,6 @@ representative ChEMBL sample, a benchmark dataset, a formal training corpus, or
 evidence of paper reproduction. Checkpoints and metrics produced from these
 fixtures must always be labelled as smoke-test outputs.
 
-`CHEMBL_smiles.csv` and generated full-size shards are intentionally ignored.
-See `docs/artifacts.md` for local regeneration and storage policy.
+Generated `.npy` shards remain ignored because they are reproducible build
+artifacts. Create them with `scripts/prepare_pretrain_data.py`, or run the whole
+training path with `scripts/run_full_pipeline.py`.

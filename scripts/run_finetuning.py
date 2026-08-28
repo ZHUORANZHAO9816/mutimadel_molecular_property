@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Canonical config-driven GTpro downstream fine-tuning runner."""
+"""Canonical config-driven downstream molecular-property fine-tuning runner."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from gtpro.config import DEFAULT_FINETUNE_CONFIG, ConfigError, load_finetune_config
 from gtpro.data.downstream import DownstreamDataset, load_downstream_dataset, split_dataset
-from gtpro.data.pretraining import tokenize_smiles
+from gtpro.data.pretraining import SmilesProcessingError, tokenize_smiles
 from gtpro.graph_trans.model.models import GROVEREmbedding
 from gtpro.run_metadata import RunRecorder
 from gtpro.training.finetuning import (
@@ -42,14 +42,18 @@ from pretrain.seq_trans import K_BERT_WCL, set_random_seed
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="GTpro downstream molecular-property fine-tuning")
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_FINETUNE_CONFIG)
+    parser.add_argument("--dataset", choices=("bbbp", "bace", "sider", "clintox", "tox21"))
+    parser.add_argument("--split", choices=("random", "scaffold"))
     parser.add_argument("--seeds", type=int, nargs="+")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda", "mps"))
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--max-samples", type=int)
     parser.add_argument("--encoder-mode", choices=("frozen", "partial", "full"))
     parser.add_argument("--pretrained-checkpoint", type=str)
+    parser.add_argument("--output-root", type=str)
+    parser.add_argument("--run-id", type=str)
     return parser
 
 
@@ -92,11 +96,15 @@ def _subset_dataset(dataset: DownstreamDataset, maximum: int | None, seed: int) 
 
 
 def _filter_text_length(dataset: DownstreamDataset, max_tokens: int) -> tuple[DownstreamDataset, int]:
-    selected = np.asarray(
-        [index for index, smiles in enumerate(dataset.canonical_smiles)
-         if len(tokenize_smiles(smiles)) <= max_tokens],
-        dtype=np.int64,
-    )
+    selected_indices = []
+    for index, smiles in enumerate(dataset.canonical_smiles):
+        try:
+            representable = len(tokenize_smiles(smiles)) <= max_tokens
+        except SmilesProcessingError:
+            representable = False
+        if representable:
+            selected_indices.append(index)
+    selected = np.asarray(selected_indices, dtype=np.int64)
     dropped = len(dataset) - len(selected)
     if dropped == 0:
         return dataset, 0
@@ -289,9 +297,11 @@ def main() -> None:
     args = build_parser().parse_args()
     config = load_finetune_config(
         args.config,
-        {"seeds": args.seeds, "device": args.device, "training.epochs": args.epochs,
+        {"seeds": args.seeds, "device": args.device, "data.dataset": args.dataset,
+         "data.split": args.split, "training.epochs": args.epochs,
          "data.max_samples": args.max_samples, "model.encoder_mode": args.encoder_mode,
-         "model.pretrained_checkpoint": args.pretrained_checkpoint},
+         "model.pretrained_checkpoint": args.pretrained_checkpoint,
+         "output.root": args.output_root, "output.run_id": args.run_id},
     )
     device = _select_device(config["device"])
     raw_dataset = load_downstream_dataset(

@@ -20,7 +20,10 @@ intentionally disclosed and blocks a claim that the entire repository is
 MIT-licensed.
 
 Scientific datasets and trained weights have separate source/use terms and are
-not granted rights by the software license.
+not granted rights by the software license. The tracked ChEMBL and MoleculeNet
+CSV files are covered by the attribution and upstream-term statement in
+`data/DATA_LICENSES.md`; their immutable download metadata are recorded in
+`data/paper_datasets.json`.
 
 The `docs/assets/paper_figure_*.jpg` files are Figures 1, 2, 3, and 6 from the
 published GTpro paper, © 2024 Elsevier Inc. They are reproduced in this

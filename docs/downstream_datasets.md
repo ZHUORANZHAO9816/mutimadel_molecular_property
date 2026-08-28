@@ -1,19 +1,21 @@
 # Downstream dataset audit and interface
 
-This C3 audit describes the files present locally on 2026-08-26. Raw benchmark
-files remain ignored and are not redistributed by this repository. Their
-presence and successful loading are engineering checks, not evidence that a
-model result has been reproduced. Source licenses and redistribution terms
-still require review before any public data release.
+This document began as the C3 local audit on 2026-08-26 and was updated when the
+five paper benchmarks were versioned on 2026-08-28. Their public download URLs,
+row counts, byte sizes, and hashes are in `data/paper_datasets.json`; attribution
+and upstream terms are in `data/DATA_LICENSES.md`. Successful loading is an
+engineering check, not evidence that a paper result has been reproduced.
 
 ## Actual inventory
 
 | Directory | Files found | Audit result |
 |---|---|---|
+| `bbbp` | `raw/BBBP.csv` | Single-molecule binary classification; 11 invalid structures are recorded and dropped. |
 | `bace` | `BACE_README`, `raw/bace.csv`, `raw/bace.npy` | Single-molecule classification and regression labels are available. |
 | `biosnap` | `raw/all.csv`, `raw/sup_train_val.csv`, `raw/sup_test.csv` | Drug-pair binary classification; no dataset README is present. |
 | `lipophilicity` | `Lipo_README`, `raw/Lipophilicity.csv`, `raw/lipo.npy` | Single-molecule regression is available. |
 | `sider` | `SIDER_README`, `raw/sider.csv`, `raw/sider.npy` | Single-molecule 27-label classification is available. |
+| `clintox` | `raw/clintox.csv` | Single-molecule two-label classification; 4 invalid structures are recorded and dropped. |
 | `tox21` | `TOX21_README`, `raw/tox21.csv`, `raw/tox21.npy` | Single-molecule 12-label classification with missing labels is available. |
 | `toxcast` | `TOXCAST_README` only | README claims a processed ToxCast collection, but no raw CSV or generated array is present. |
 | `twosides` | `raw/Drug_META_DDIE.db`, `raw/reliable_negatives.csv`, `raw/twosides_interactions.csv` | Drug-pair binary interaction data plus a drug metadata database; no dataset README is present. |
@@ -29,14 +31,17 @@ normalizes missing labels to `NaN` with a Boolean validity mask.
 
 | Loader name | Logical CSV rows | SMILES column | Target columns | Task type | Native missing-label encoding |
 |---|---:|---|---|---|---|
+| `bbbp` | 2,050 | `smiles` | `p_np` | Binary classification | None observed |
 | `bace` | 1,513 | `mol` | `Class` | Binary classification | None observed |
 | `bace_regression` | 1,513 | `mol` | `pIC50` | Regression | None observed |
 | `tox21` | 7,831 | `smiles` | 12 `NR-*`/`SR-*` assays | Multilabel classification | Empty CSV fields, normalized to `NaN` |
 | `lipophilicity` | 4,200 | `smiles` | `exp` | Regression | None observed |
 | `sider` | 1,427 | `smiles` | 27 MedDRA system-organ classes | Multilabel classification | None observed |
+| `clintox` | 1,484 | `smiles` | `FDA_APPROVED`, `CT_TOX` | Multilabel classification | None observed |
 
-All five loader variants parsed every SMILES in their CSV during C3. No
-canonical duplicate was found in these four underlying CSV files. The BACE CSV
+The loader records invalid structures instead of failing an entire dataset.
+BBBP yields 2,039 valid molecules and ClinTox yields 1,480; the other four
+source CSVs parse completely. The BACE CSV
 contains 595 columns, mostly precomputed descriptors; the unified interface
 deliberately selects only structure, identifier, and configured target columns.
 BACE's `Model` column contains 203 `Train`, 45 `Valid`, and 1,265 `Test` rows,
@@ -109,9 +114,10 @@ record.targets       # shape: (12,)
 record.target_mask   # False where the CSV label was missing
 ```
 
-Registered names are `bace`, `bace_regression`, `tox21`, `lipophilicity`, and
-`sider`. `DatasetSpec` and `load_downstream_csv` allow the same normalization to
-be applied to an explicitly described CSV without adding an implicit schema.
+Registered names are `bbbp`, `bace`, `bace_regression`, `sider`, `clintox`,
+`tox21`, and `lipophilicity`. `DatasetSpec` and `load_downstream_csv` allow the
+same normalization to be applied to an explicitly described CSV without adding
+an implicit schema.
 
 ## Random and scaffold splits
 

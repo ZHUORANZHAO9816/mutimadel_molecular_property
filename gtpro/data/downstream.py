@@ -74,6 +74,15 @@ class DatasetSpec:
 
 
 DATASET_SPECS: Mapping[str, DatasetSpec] = {
+    "bbbp": DatasetSpec(
+        name="bbbp",
+        relative_path="bbbp/raw/BBBP.csv",
+        smiles_column="smiles",
+        target_columns=("p_np",),
+        task_type="binary_classification",
+        native_missing_label="none observed",
+        id_column="name",
+    ),
     "bace": DatasetSpec(
         name="bace",
         relative_path="bace/raw/bace.csv",
@@ -115,6 +124,14 @@ DATASET_SPECS: Mapping[str, DatasetSpec] = {
         relative_path="sider/raw/sider.csv",
         smiles_column="smiles",
         target_columns=SIDER_TARGETS,
+        task_type="multilabel_classification",
+        native_missing_label="none observed",
+    ),
+    "clintox": DatasetSpec(
+        name="clintox",
+        relative_path="clintox/raw/clintox.csv",
+        smiles_column="smiles",
+        target_columns=("FDA_APPROVED", "CT_TOX"),
         task_type="multilabel_classification",
         native_missing_label="none observed",
     ),

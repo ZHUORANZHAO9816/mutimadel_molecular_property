@@ -56,7 +56,13 @@ artifacts/*
 # Full/generated pretraining data. Keep only documented smoke fixtures.
 data/pretrain_data/*
 !data/pretrain_data/README.md
+!data/pretrain_data/CHEMBL_smiles.csv
 !data/pretrain_data/gtpro_smoke_*.npy
 
-# Full downstream dataset copies stay local. Dataset provenance READMEs remain.
-data/downstream/**/raw/
+# Paper benchmark CSVs are tracked with provenance; other raw assets stay local.
+data/downstream/**/raw/*
+!data/downstream/bbbp/raw/BBBP.csv
+!data/downstream/bace/raw/bace.csv
+!data/downstream/sider/raw/sider.csv
+!data/downstream/clintox/raw/clintox.csv
+!data/downstream/tox21/raw/tox21.csv

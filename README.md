@@ -64,6 +64,29 @@ This bounded example verifies that preprocessing, pretraining, representation
 transfer, fine-tuning, and evaluation work together. The paper experiments use
 the full datasets and settings described below.
 
+### One-command complete workflow
+
+The repository also includes the paper's ChEMBL SMILES collection and all five
+MoleculeNet benchmark CSVs. The following command performs data preprocessing,
+graph-text pretraining, checkpoint transfer, fine-tuning on BBBP, BACE, SIDER,
+ClinTox, and Tox21, and finally writes a single results table:
+
+```bash
+python scripts/run_full_pipeline.py
+```
+
+CUDA can be selected explicitly with `--device cuda`. Before a longer run, the
+same complete path can be checked on CPU with 128 molecules per stage:
+
+```bash
+python scripts/run_full_pipeline.py --quick --device cpu
+```
+
+Each run is stored under `runs/full_pipeline/<run-id>/`; `summary.md` and
+`summary.json` contain the downstream test metrics, while the pretraining and
+fine-tuning subdirectories retain configurations, checkpoints, predictions,
+and environment metadata.
+
 ## Why graph-text alignment?
 
 <p align="center">
@@ -128,8 +151,11 @@ graph-text pairs provide supervision at complementary molecular scales.
 ### Downstream benchmarks
 
 The paper's classification experiments use five public MoleculeNet benchmarks.
-The original dataset files and standard benchmark definitions are available
-through [MoleculeNet](https://github.com/deepchem/moleculenet).
+The source CSVs are versioned in this repository so that a fresh clone can run
+without a separate data-collection step. Their source URLs, byte sizes, row
+counts, and SHA-256 hashes are recorded in
+[`data/paper_datasets.json`](data/paper_datasets.json); attribution and data
+terms are documented in [`data/DATA_LICENSES.md`](data/DATA_LICENSES.md).
 
 | Dataset | Molecular property | Tasks | Paper metric |
 |---|---|---:|---|
@@ -138,6 +164,13 @@ through [MoleculeNet](https://github.com/deepchem/moleculenet).
 | SIDER | Adverse drug reactions grouped by system organ class | 27 | ROC–AUC ↑ |
 | ClinTox | Clinical toxicity and regulatory approval outcomes | 2 | ROC–AUC ↑ |
 | Tox21 | Nuclear-receptor and stress-response toxicity assays | 12 | ROC–AUC ↑ |
+
+To refresh these files directly from ChEMBL and the public DeepChem
+MoleculeNet endpoints, run:
+
+```bash
+python scripts/download_paper_datasets.py --force
+```
 
 The task counts make the benchmark scope explicit: BBBP and BACE are
 single-task classification problems, whereas SIDER, ClinTox, and Tox21 test
@@ -242,7 +275,7 @@ between graph atoms and SMILES tokens.
 contrastive objective and its graph-text attention matrix. © 2024 Elsevier
 Inc.; reproduced here by author request.*
 
-## Full-data training
+## Installation and training options
 
 Python 3.9–3.12 is supported.
 
@@ -251,7 +284,10 @@ python -m pip install -e ".[train,test]"
 pytest -q
 ```
 
-Prepare ChEMBL molecules from a CSV containing a `smiles` column:
+The one-command runner above uses all versioned molecules by default and a
+compact training configuration suitable for validating the complete research
+workflow. Individual stages can also be run directly. Prepare ChEMBL molecules
+from a CSV containing a `smiles` column:
 
 ```bash
 python scripts/prepare_pretrain_data.py \
@@ -270,7 +306,7 @@ python scripts/prepare_pretrain_data.py \
   --num-shards 4
 ```
 
-Run graph-text pretraining with the paper-scale configuration:
+Run graph-text pretraining with the paper-scale architecture configuration:
 
 ```bash
 python scripts/run_pretraining.py \

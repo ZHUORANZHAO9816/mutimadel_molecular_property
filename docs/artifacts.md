@@ -1,10 +1,10 @@
 # Data and artifact policy
 
-This repository keeps source code, documentation, and explicitly documented
-small test fixtures in Git. Full datasets, generated shards, run directories,
-logs, and model weights stay outside Git because they are large, reproducible,
-license-sensitive, machine-specific, or potentially misleading without their
-complete training provenance.
+This repository keeps source code, documentation, the paper's versioned source
+CSVs, and explicitly documented test fixtures in Git. Generated shards, run
+directories, logs, and model weights stay outside Git because they are
+reproducible, machine-specific, or potentially misleading without complete
+training provenance.
 
 ## What Git excludes
 
@@ -13,8 +13,8 @@ complete training provenance.
 | `checkpoints/*.pth`, `*.pt`, `*.ckpt` | Model weights are large binary outputs. The current files are smoke products, not pretrained releases. | Run the relevant training command locally. Formal weights must be downloaded from a versioned release location once one exists. |
 | `runs/` | Per-run configuration, environment details, metrics, predictions, logs, and checkpoints are generated outputs. | Created by the standardized runners planned in stages B–D. |
 | `artifacts/` | Processed data, reports, and other reproducible generated files may be large. | Created by data-preparation and result-summary scripts. |
-| `data/pretrain_data/*` | Full ChEMBL inputs and generated shards are not suitable for direct Git storage. | Use `scripts/prepare_pretrain_data.py` as described below. |
-| `data/downstream/**/raw/` | Full downstream dataset copies remain local until provenance and redistribution terms are audited. | Obtain each benchmark from its authoritative source, using the dataset README as the current provenance pointer. |
+| `data/pretrain_data/*.npy` | Generated ChEMBL shards are reproducible build outputs. | Use `scripts/prepare_pretrain_data.py` as described below. |
+| Unlisted files under `data/downstream/**/raw/` | Historical arrays and unrelated datasets are excluded. | The five paper benchmark CSVs are explicit exceptions with provenance in `data/paper_datasets.json`. |
 | caches, `.DS_Store`, logs, virtual environments | Machine-local or reproducible files. | Recreated automatically by the relevant tool. |
 | `.claude/`, `.env*` | Personal permissions, local paths, and possible credentials must not be published. | Create locally; never copy into releases. `.env.example` may be tracked if it contains placeholders only. |
 
@@ -23,7 +23,7 @@ remain available to local smoke and baseline commands.
 
 ## Allowed smoke fixtures
 
-The only pretraining binaries deliberately eligible for Git are:
+The only generated pretraining binaries deliberately eligible for Git are:
 
 ```text
 data/pretrain_data/gtpro_smoke_1.npy
@@ -86,12 +86,11 @@ passed in the current repository state.
 
 ### Downstream datasets
 
-Raw downstream files stay in `data/downstream/<dataset>/raw/`. The current
-dataset-specific README files provide the available citations or source notes.
-The C3 inventory, actual schemas, missing-label conventions, supported loader
-scope, and README discrepancies are recorded in `docs/downstream_datasets.md`.
-This audit does not grant redistribution permission or fill the missing ToxCast,
-BioSNAP, and TWOSIDES provenance documentation.
+The source CSVs for BBBP, BACE, SIDER, ClinTox, and Tox21 are tracked under
+`data/downstream/<dataset>/raw/`. Download URLs, hashes, and row counts live in
+`data/paper_datasets.json`; source terms are summarized in
+`data/DATA_LICENSES.md`. Historical arrays and datasets outside the five paper
+benchmarks remain local-only.
 
 ## Formal checkpoint publication
 

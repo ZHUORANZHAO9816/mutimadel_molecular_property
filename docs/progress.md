@@ -3,6 +3,26 @@
 This log records engineering changes and actual verification results. Smoke
 runs are never treated as paper reproduction results.
 
+## 2026-08-28 — Versioned datasets and one-command full workflow
+
+- Downloaded and versioned the 12,008-row ChEMBL SMILES collection and the
+  BBBP, BACE, SIDER, ClinTox, and Tox21 source CSVs.
+- Added a machine-readable source manifest with row counts, byte sizes, source
+  URLs, and SHA-256 hashes, plus a separate dataset attribution and terms note.
+- Registered BBBP and ClinTox in the unified downstream interface and made text
+  filtering robust to valid molecules outside the fixed SMILES vocabulary.
+- Added `scripts/run_full_pipeline.py`, which performs preprocessing,
+  pretraining, checkpoint transfer, five downstream fine-tunes, and metric
+  aggregation in one command.
+
+### Verification
+
+- The `--quick --device cpu` path completed preprocessing and pretraining, then
+  trained and evaluated BBBP, BACE, SIDER, ClinTox, and Tox21 in sequence.
+- `pytest -q`: 52 tests passed.
+- `python scripts/audit_release.py`: 494 publication candidates passed the
+  release audit; generated weights and run outputs remained ignored.
+
 ## 2026-08-28 — README aligned to paper datasets, training, and results
 
 - Removed the unexplained `GTpro` model name from the public paper narrative

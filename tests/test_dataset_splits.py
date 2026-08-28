@@ -56,6 +56,8 @@ def _assert_partition_and_canonical_isolation(dataset, split) -> None:
 
 
 def test_registered_task_schemas_are_explicit() -> None:
+    assert DATASET_SPECS["bbbp"].task_type == "binary_classification"
+    assert DATASET_SPECS["bbbp"].target_columns == ("p_np",)
     assert DATASET_SPECS["bace"].task_type == "binary_classification"
     assert DATASET_SPECS["bace"].smiles_column == "mol"
     assert DATASET_SPECS["bace"].target_columns == ("Class",)
@@ -66,6 +68,8 @@ def test_registered_task_schemas_are_explicit() -> None:
     assert DATASET_SPECS["lipophilicity"].task_type == "regression"
     assert DATASET_SPECS["sider"].task_type == "multilabel_classification"
     assert len(DATASET_SPECS["sider"].target_columns) == 27
+    assert DATASET_SPECS["clintox"].task_type == "multilabel_classification"
+    assert DATASET_SPECS["clintox"].target_columns == ("FDA_APPROVED", "CT_TOX")
 
 
 def test_committed_fixture_covers_required_edge_cases() -> None:

@@ -31,7 +31,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from gtpro.data.downstream import DownstreamDataset, load_downstream_dataset, split_dataset
-from gtpro.data.pretraining import tokenize_smiles
+from gtpro.data.pretraining import SmilesProcessingError, tokenize_smiles
 from gtpro.metrics import compute_metrics
 
 
@@ -51,10 +51,15 @@ def _atomic_text(path: Path, text: str) -> None:
 
 
 def _eligible(dataset: DownstreamDataset, max_tokens: int = 200) -> tuple[DownstreamDataset, int]:
-    selected = np.asarray(
-        [index for index, smiles in enumerate(dataset.canonical_smiles)
-         if len(tokenize_smiles(smiles)) <= max_tokens], dtype=np.int64
-    )
+    selected_indices = []
+    for index, smiles in enumerate(dataset.canonical_smiles):
+        try:
+            representable = len(tokenize_smiles(smiles)) <= max_tokens
+        except SmilesProcessingError:
+            representable = False
+        if representable:
+            selected_indices.append(index)
+    selected = np.asarray(selected_indices, dtype=np.int64)
     dropped = len(dataset) - len(selected)
     if not dropped:
         return dataset, 0

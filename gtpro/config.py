@@ -1,4 +1,4 @@
-"""Validated YAML configuration loading for GTpro runners."""
+"""Validated YAML configuration loading for molecular-model runners."""
 
 from __future__ import annotations
 
@@ -8,6 +8,8 @@ from typing import Any, Mapping
 
 import numpy as np
 import yaml
+
+from gtpro.data.downstream import available_datasets
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -199,8 +201,11 @@ def load_finetune_config(
     device = _get(config, "device")
     if device not in {"auto", "cpu", "cuda", "mps"}:
         raise ConfigError(f"device must be auto, cpu, cuda, or mps; got {device!r}")
-    if _get(config, "data.dataset") not in {"bace", "tox21", "lipophilicity"}:
-        raise ConfigError("data.dataset must be bace, tox21, or lipophilicity")
+    dataset = _get(config, "data.dataset")
+    supported_datasets = set(available_datasets())
+    if dataset not in supported_datasets:
+        choices = ", ".join(sorted(supported_datasets))
+        raise ConfigError(f"data.dataset must be one of: {choices}")
     if _get(config, "data.split") not in {"random", "scaffold"}:
         raise ConfigError("data.split must be random or scaffold")
     if _get(config, "data.invalid_smiles") not in {"drop", "raise"}:

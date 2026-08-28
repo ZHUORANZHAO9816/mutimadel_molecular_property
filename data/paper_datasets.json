@@ -1,0 +1,52 @@
+{
+  "datasets": [
+    {
+      "name": "bbbp",
+      "source": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/BBBP.csv",
+      "path": "data/downstream/bbbp/raw/BBBP.csv",
+      "rows": 2050,
+      "bytes": 148743,
+      "sha256": "d07a38487aeac5cee5508413e468043ef3097451d2a112701c2d60be9ec6b662"
+    },
+    {
+      "name": "bace",
+      "source": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/bace.csv",
+      "path": "data/downstream/bace/raw/bace.csv",
+      "rows": 1513,
+      "bytes": 3897767,
+      "sha256": "f3fb9ce90bada3e2bd6148b0df13f8f8145a357bf87df0dd5b391ede974fc737"
+    },
+    {
+      "name": "sider",
+      "source": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/sider.csv.gz",
+      "path": "data/downstream/sider/raw/sider.csv",
+      "rows": 1427,
+      "bytes": 183743,
+      "sha256": "71efc6ac4ca82d6545bc512509863281be0f17234afd7adaf71a71899988302e"
+    },
+    {
+      "name": "clintox",
+      "source": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/clintox.csv.gz",
+      "path": "data/downstream/clintox/raw/clintox.csv",
+      "rows": 1484,
+      "bytes": 95512,
+      "sha256": "9999816e760dd838358b5d88e81cea2fc062be4458ffa412ceecdba4f88a67b6"
+    },
+    {
+      "name": "tox21",
+      "source": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/tox21.csv.gz",
+      "path": "data/downstream/tox21/raw/tox21.csv",
+      "rows": 7831,
+      "bytes": 525119,
+      "sha256": "7d7e7facd853a63e79ddce4e9c3fcb7a0d83a1c300b603031c0f2c64fbe77761"
+    },
+    {
+      "name": "chembl_pretraining",
+      "source": "https://www.ebi.ac.uk/chembl/api/data/molecule",
+      "path": "data/pretrain_data/CHEMBL_smiles.csv",
+      "rows": 12008,
+      "bytes": 641557,
+      "sha256": "1a351d2f6f819828f739ad78a631b6e8cb9949cb80e18f4328ee97d79e038e6f"
+    }
+  ]
+}

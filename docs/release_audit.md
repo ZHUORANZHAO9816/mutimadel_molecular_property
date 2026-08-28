@@ -6,12 +6,13 @@ published.
 
 ## Local candidate audit
 
-`python scripts/audit_release.py` passed with 482 publication candidates, 476
-UTF-8 text files, 116 result trace records, and 19 valid README-local links.
+`python scripts/audit_release.py` passed with 494 publication candidates, 488
+UTF-8 text files, 116 result trace records, and 14 valid README-local links.
 No candidate exceeded 50 MiB or matched the prohibited checkpoint/cache/log
 classes. The scan found no private-key header, AWS access-key pattern, or
-personal macOS/Linux absolute path. The ignored local full datasets, run
-directories, joblib files, and model weights are not publication candidates.
+personal macOS/Linux absolute path. The versioned paper datasets carry a source
+manifest and separate attribution statement. Run directories, joblib files,
+generated shards, and model weights are not publication candidates.
 
 Each copied result `metrics.json` has sibling `config.yaml` and
 `environment.json`. `scripts/summarize_results.py` replaces the machine's
