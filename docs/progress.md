@@ -5,6 +5,14 @@ runs are never treated as paper reproduction results.
 
 ## 2026-08-28 — README aligned to paper datasets, training, and results
 
+- Refined the homepage presentation after reviewing the official MolCLR,
+  GraphMVP, GROVER, and Uni-Mol repositories. Added prominent authorship and
+  venue metadata, compact paper links, contribution highlights, benchmark task
+  counts, a proper ROC–AUC definition, and evidence-focused ablation analysis.
+- Reframed the results around the evaluation question: what the metric means,
+  what each benchmark measures, why multi-task datasets are not directly
+  comparable by raw score, and what the consistent full-model improvement
+  demonstrates.
 - Replaced the compact reproduction and baseline tables in the README with the
   five final GTpro ROC-AUC values printed in paper Figure 3: BBBP 0.962, BACE
   0.881, SIDER 0.684, ClinTox 0.997, and Tox21 0.821.

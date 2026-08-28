@@ -1,6 +1,15 @@
 # Boosting the performance of molecular property prediction via graph-text alignment and multi-granularity representation enhancement
 
-> Official implementation of GTpro, accompanying [Zhao et al. (2024)](https://doi.org/10.1016/j.jmgm.2024.108843).
+**Zhuoran Zhao, Qing Zhou, Chengkai Wu, Renbin Su, and Weihong Xiong**<br>
+*Journal of Molecular Graphics and Modelling*, Volume 132, 108843, 2024
+
+[[Paper](https://doi.org/10.1016/j.jmgm.2024.108843)]
+[[PubMed](https://pubmed.ncbi.nlm.nih.gov/39173218/)]
+[[Citation](#citation)]
+
+> Official implementation of **GTpro**, a graph-text molecular representation
+> framework with cross-modal alignment and chemistry-aware, multi-granularity
+> pretraining.
 
 ## Overview
 
@@ -14,6 +23,18 @@ molecular property prediction tasks.
 
 The paper reports that GTpro outperforms the compared state-of-the-art methods
 while using less pretraining data.
+
+### Highlights
+
+- **Aligned multimodal representations.** Contrastive learning reduces the
+  embedding gap between paired molecular graphs and SMILES sequences.
+- **Deep graph-text interaction.** Cross-attention exchanges complementary
+  structural and sequential information instead of simply concatenating the
+  two modalities.
+- **Chemistry-aware pretraining.** Atom-, functional-group-, and molecule-level
+  objectives inject domain knowledge at complementary scales.
+- **Consistent downstream gains.** The complete pretraining objective performs
+  best across all five classification benchmarks in the paper's ablation.
 
 ## Why graph-text alignment?
 
@@ -69,7 +90,11 @@ GTpro is pretrained with molecules from
 [ChEMBL](https://www.ebi.ac.uk/chembl/). Each molecule is converted into two
 paired views: a molecular graph for the graph encoder and a tokenized SMILES
 sequence for the text encoder. Atom properties, functional groups, and
-graph-text pairs provide the supervision for the multi-granularity objectives.
+graph-text pairs provide supervision at complementary molecular scales.
+
+| Source | Data role | Molecular views | Learning signals |
+|---|---|---|---|
+| ChEMBL | Unlabeled molecular pretraining | Graph + tokenized SMILES | APP + FGP + GTM + CON |
 
 ### Downstream benchmarks
 
@@ -77,13 +102,17 @@ The paper's classification experiments use five public MoleculeNet benchmarks.
 The original dataset files and standard benchmark definitions are available
 through [MoleculeNet](https://github.com/deepchem/moleculenet).
 
-| Dataset | Prediction task | Metric |
-|---|---|---|
-| BBBP | Blood-brain barrier penetration | ROC-AUC |
-| BACE | BACE-1 inhibitor classification | ROC-AUC |
-| SIDER | Drug side-effect classification | ROC-AUC |
-| ClinTox | Clinical toxicity classification | ROC-AUC |
-| Tox21 | Toxicity classification across biological targets | ROC-AUC |
+| Dataset | Molecular property | Tasks | Paper metric |
+|---|---|---:|---|
+| BBBP | Blood-brain barrier permeability | 1 | ROC–AUC ↑ |
+| BACE | Inhibition of human β-secretase 1 | 1 | ROC–AUC ↑ |
+| SIDER | Adverse drug reactions grouped by system organ class | 27 | ROC–AUC ↑ |
+| ClinTox | Clinical toxicity and regulatory approval outcomes | 2 | ROC–AUC ↑ |
+| Tox21 | Nuclear-receptor and stress-response toxicity assays | 12 | ROC–AUC ↑ |
+
+The task counts make the benchmark scope explicit: BBBP and BACE are
+single-task classification problems, whereas SIDER, ClinTox, and Tox21 test
+multi-task molecular representations across heterogeneous biological endpoints.
 
 ## Training method
 
@@ -97,8 +126,8 @@ through [MoleculeNet](https://github.com/deepchem/moleculenet).
    between paired global representations, and cross-attention produces the
    joint multimodal representation.
 5. **Fine-tune for molecular properties.** A task-specific prediction head is
-   trained on each downstream dataset and evaluated with ROC-AUC for the
-   classification benchmarks.
+   optimized on each labeled benchmark. Classification performance is measured
+   with ROC–AUC, following the evaluation in the paper.
 
 The paper-scale configuration represented by [`configs/pretrain.yaml`](configs/pretrain.yaml)
 uses the following settings:
@@ -117,10 +146,20 @@ uses the following settings:
 
 ## Results reported in the paper
 
-Figure 3 compares three settings: no pretraining, multi-granularity pretraining
-with APP + FGP + GTM, and the complete objective with APP + FGP + GTM + CON.
-The complete GTpro configuration achieves the best ROC-AUC on all five plotted
-classification benchmarks.
+### Evaluation metric
+
+**ROC–AUC (area under the receiver operating characteristic curve)** evaluates
+how well a model ranks positive molecules above negative molecules across all
+possible decision thresholds. A value of 0.5 corresponds to random ranking and
+1.0 to perfect discrimination; **higher is better (↑)**. For multi-task
+benchmarks, the reported score summarizes predictive quality across their
+constituent endpoints.
+
+Figure 3 compares three controlled variants: **no pretraining**,
+**APP + FGP + GTM**, and the complete **APP + FGP + GTM + CON** objective. This
+design isolates the contribution of chemistry-aware multi-granularity
+pretraining and then measures the additional effect of graph-text contrastive
+alignment.
 
 <p align="center">
   <img src="docs/assets/paper_figure_3_pretraining_ablation.jpg"
@@ -128,16 +167,33 @@ classification benchmarks.
        width="680">
 </p>
 
-| Dataset | GTpro objective | ROC-AUC ↑ |
-|---|---|---:|
-| BBBP | APP + FGP + GTM + CON | **0.962** |
-| BACE | APP + FGP + GTM + CON | **0.881** |
-| SIDER | APP + FGP + GTM + CON | **0.684** |
-| ClinTox | APP + FGP + GTM + CON | **0.997** |
-| Tox21 | APP + FGP + GTM + CON | **0.821** |
+| Benchmark | Tasks | Full GTpro objective | Paper-reported ROC–AUC ↑ |
+|---|---:|---|---:|
+| BBBP | 1 | APP + FGP + GTM + CON | **0.962** |
+| BACE | 1 | APP + FGP + GTM + CON | **0.881** |
+| SIDER | 27 | APP + FGP + GTM + CON | **0.684** |
+| ClinTox | 2 | APP + FGP + GTM + CON | **0.997** |
+| Tox21 | 12 | APP + FGP + GTM + CON | **0.821** |
 
 *Values are the final-configuration ROC-AUC scores printed in Figure 3 of the
 paper. © 2024 Elsevier Inc.; reproduced here by author request.*
+
+### What the ablation demonstrates
+
+- **The complete objective is consistently strongest.** Adding contrastive
+  graph-text alignment to APP + FGP + GTM improves the result on every plotted
+  benchmark, rather than benefiting only one property family.
+- **GTpro is particularly strong on BBBP and ClinTox.** The full model reaches
+  0.962 and 0.997 ROC–AUC, respectively, while also attaining 0.881 on BACE and
+  0.821 on Tox21.
+- **The result spans different levels of task complexity.** The same framework
+  transfers from single-task endpoints to SIDER's 27 adverse-reaction labels
+  and Tox21's 12 toxicity assays.
+
+Because the datasets differ in size, label balance, and number of tasks, their
+absolute ROC–AUC values should be interpreted within each benchmark. The key
+cross-benchmark finding is the consistent ordering of the three controlled
+pretraining variants.
 
 ### Representation analysis
 
